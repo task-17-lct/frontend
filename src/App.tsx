@@ -3,10 +3,10 @@ import { configureRootTheme } from '@yandex/ui/Theme'
 import { theme } from '@yandex/ui/Theme/presets/default'
 
 
-configureRootTheme({ theme })
 import { MyMap } from './сomponents/map';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+configureRootTheme({ theme })
 
 function App() {
   return (
