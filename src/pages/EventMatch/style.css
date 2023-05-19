@@ -1,0 +1,9 @@
+.tinder-block{
+    width: 700px;
+    display: flex;
+    justify-content: center;
+}
+
+.main-btn{
+    background-color: #FFCF08;
+}
