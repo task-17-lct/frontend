@@ -1,0 +1,24 @@
+.headerWrapper{
+    height: 100px;
+    padding: 10px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100%-100px); 
+}
+
+.iconWrapper{
+    display: flex;
+    align-items: center;
+    gap:10px;
+}
+
+.headerIcon{
+    transition: 0.3s;
+    cursor:pointer
+
+}
+
+.headerIcon:hover{
+    transform: scale(1.05);
+}

@@ -1,15 +1,12 @@
 import React from 'react';
-import { configureRootTheme } from '@yandex/ui/Theme'
-import { theme } from '@yandex/ui/Theme/presets/default'
+import { Register } from './pages/Register';
 
-
-configureRootTheme({ theme })
 
 
 function App() {
   return (
     <div className="App">
-      hello
+      Hello
     </div>
   );
 }
