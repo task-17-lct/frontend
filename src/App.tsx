@@ -1,8 +1,5 @@
 import React from 'react';
-import { configureRootTheme } from '@yandex/ui/Theme'
-import { theme } from '@yandex/ui/Theme/presets/default'
-
-
+import { Register } from './pages/Register';
 import { MyMap } from './сomponents/map';
 import 'mapbox-gl/dist/mapbox-gl.css';
 

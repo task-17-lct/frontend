@@ -1,0 +1,70 @@
+.tourcard-block{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap:50px;
+    padding: 25px;
+    border: solid #F5DFB8 1px;
+    background-color: #fff;
+}
+
+.cardDescr{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cardTitle{
+    display: flex;
+    flex-direction: column;
+    gap:15px
+}
+
+.cardInfo{
+    display: flex;
+    gap:15px;
+    color:rgba(29, 29, 29, 0.5)
+}
+
+.cardAvatar{
+    height: 100px;
+    transform: rotate(5deg);
+}
+
+.titleText{
+    font-size: 24px;
+    padding-right: 50px;
+}
+
+.placesWrapper{
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    margin-top: 30px;
+}
+
+.placeCard{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.placeImage{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.placeDescrWrapper{
+    display: flex;
+    flex-direction: column;
+    gap:7px;
+    font-size: 16px;
+}
+
+.placeType{
+    color:rgba(29, 29, 29, 0.5);
+    font-size: 12px;
+}

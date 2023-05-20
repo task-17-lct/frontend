@@ -1,0 +1,52 @@
+.generatecard-block{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap:30px;
+    padding: 25px;
+    border: solid #F5DFB8 1px;
+    background-color: #fff;
+}
+
+.generateCardDescr{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cardTitle{
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+    width: 75%;
+}
+
+
+
+.generateTitleText{
+    font-size: 24px;
+}
+
+.generateCardTitle{
+    display: flex;
+    flex-direction: column;
+    gap:15px
+}
+
+
+.generate-y{
+    background-color: #FFCF08;
+    border-radius: 10px;
+    padding: 15px 50px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px
+}
+
+.wand{
+    height: 25px;
+}

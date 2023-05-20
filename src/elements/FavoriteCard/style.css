@@ -1,0 +1,30 @@
+.favoriteCard{
+    display: block;
+}
+
+.imageFavoriteCard{
+    border-radius: 30px;
+}
+.likeButton{
+    cursor: pointer;
+    transition: 0.3s;
+    transform: translateY(-60px) translateX(10px);
+}
+.likeButton:hover{
+    transform: scale(1.1);
+}
+.titleFavoriteCard{
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
+.locationFavoriteCard{
+    font-size: 16px;
+}
+.img-cnt{
+    display: flex;
+    flex-direction: column;
+}
+.tr-cnt{
+    transform: translateY(-40px);
+}
