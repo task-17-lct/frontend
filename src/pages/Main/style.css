@@ -7,14 +7,26 @@
     gap:25px;
     border-radius: 48px;
     padding: 50px;
+    width: calc(100% - 200px);
+}
+.mainCard>h2{
+    display: inline-block;
+    width: 400px;
 }
 
 .cardWrapper{
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap:25px;
     justify-content: center;
+}
+
+.fav-wrapper{
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
 }
 
 .grey{

@@ -12,12 +12,15 @@ export const FavoriteCard:React.FC<FavoriteCardIE> = (props) =>{
 
     return (
         <div className="favoriteCard">
-            <div>
+            <div className="img-cnt">
                 <img className="imageFavoriteCard" src={props.imageURL}></img>
-                <img onClick={()=>setLiked(!liked)} className="likeButton" src={liked? 'likeButtonActive.svg':'likeButton.svg'}></img>
+                <img width={40} onClick={()=>setLiked(!liked)} className="likeButton" src={liked? 'likeButtonActive.svg':'likeButton.svg'}></img>
             </div>
-            <div className="titleFavoriteCard">{props.title}</div>
-            <div className="locationFavoriteCard">{props.location}</div>
+            <div className="tr-cnt">
+                <span className="titleFavoriteCard">{props.title}</span>
+                <br />
+                <span className="locationFavoriteCard">{props.location}</span>
+            </div>
         </div>
     );
 }

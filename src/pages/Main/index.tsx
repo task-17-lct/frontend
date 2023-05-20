@@ -52,7 +52,7 @@ export const Main: react.FC = () => {
          </div>
          <div className='mainCard'>
             <h2>Добавьте в избранное</h2>
-            <div className='cardWrapper' style={{gap:'10px'}}>
+            <div className='fav-wrapper'>
                <FavoriteCard {...favoriteCardProps}></FavoriteCard>
                <FavoriteCard {...favoriteCardProps}></FavoriteCard>
                <FavoriteCard {...favoriteCardProps}></FavoriteCard>
