@@ -6,6 +6,7 @@ import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 import { Main } from './pages/Main';
 import { EventMatch } from './pages/EventMatch';
+import { GenerateTour } from './pages/GenerateTour';
 
 
 const routes = [
@@ -28,7 +29,12 @@ const routes = [
     {
         path: '/event-match',
         element: <EventMatch></EventMatch>
+    },
+    {
+        path: '/generate',
+        element: <GenerateTour></GenerateTour>
     }
+
 ]
 
 export const router = createBrowserRouter(routes);
