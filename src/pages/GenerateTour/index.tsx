@@ -1,58 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DatePicker, Select } from 'antd';
 import { RusPassHeader } from "../../elements/Header";
 import { Block } from "../../elements/Block";
 import { Button } from "../../elements/Button";
 import { TourCard, TourCardIE } from "../../elements/TourCard";
-
+import './style.css'
+import axios from "axios";
+import { backend } from "../../consts";
 const { RangePicker } = DatePicker;
 
 export const GenerateTour = () =>{
     
     const [dates, setDates] = useState()
     const [theme, setTheme] = useState('jack')
-
     const [generate, setGenerate] = useState(false)
+    const [toursData, setToursData] = useState(new Array<TourCardIE>())
+
+    useEffect(()=>{
+        if (toursData.length == 0){
+            backend.get('/route/build').then((data)=>setToursData(data.data))
+        }
+    })
 
 
 
-    const TourPropsCard = {
-        title: 'Я покажу тебе Москву',
-        days: 8,
-        imageURL: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-        placeCards: [
-           {
-              title:'Парк Горького',
-              type: 'Место',
-              imageURL:'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-           },
-           {
-              title:'Отель Москва',
-              type: 'Отель',
-              imageURL:'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-           },
-           {
-              title:'Ресторан Сказка',
-              type: 'Ресторан',
-              imageURL:'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-           }
-        ]
-     } as TourCardIE
      
-    let tours = []
+    let tours = new Array()
 
-    for (let i=0; i<=5; i++){
+    toursData.forEach(tour => {
         tours.push(
-            <TourCard {...TourPropsCard}></TourCard>
+            <TourCard {...tour}></TourCard>
         )
-    }
+    })
+
+    console.log(toursData)
+        
 
     return(
         <div>
             <RusPassHeader></RusPassHeader>
-            <div>
-                <Block className="">
-                    <div>
+            <div className='generateTourContent'>
+                <Block className="generateTourBlock">
+                    <div className="tourToolBar">
                         <RangePicker
                             onChange={(e)=>setDates(e as any)}
                         ></RangePicker>
@@ -70,8 +59,8 @@ export const GenerateTour = () =>{
                         />
                         <Button onClick={()=>setGenerate(!generate)} className="btn-y">Сгенирировать</Button>
                     </div>
-                    
-                    <div>
+                    <h2>Рекомендованные Туры</h2>
+                    <div className="tourCardsWrapper">
                         {
                             generate? tours:null
                         }

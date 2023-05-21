@@ -7,3 +7,28 @@
     border: none;
     cursor: pointer;
 }
+
+.generateTourBlock{
+    display: flex;
+    flex-direction: column;
+    gap:30px
+}
+
+.tourCardsWrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:15px
+}
+
+.tourToolBar{
+    display: flex;
+    flex-direction: row;
+    gap:15px;
+    align-items: center;
+}
+
+.generateTourContent{
+    padding:50px;
+    
+}

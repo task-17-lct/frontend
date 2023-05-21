@@ -3,17 +3,21 @@ import { Button } from '../../elements/Button'
 import { Block } from '../../elements/Block'
 import './style.css'
 import { MyMap } from "../../сomponents/map";
+import Sidebar from "react-sidebar";
 
 export interface PlaceCardIE{
     title:string,
-    type: string,
-    imageURL?: string
+    description: string,
+    icon: string,
+    location: number[]
+
 }
 
 export interface TourCardIE{
-    title:string,
+    name:string,
+    description:string,
     days:number, 
-    placeCards: PlaceCardIE[],
+    points: PlaceCardIE[],
     imageURL?: string
 }
 
@@ -22,9 +26,9 @@ export const PlaceCard: React.FC<PlaceCardIE> = (props) =>{
         <div className="placeCard">
             <div className="placeDescrWrapper">
                 <div>{props.title}</div>
-                <div className="placeType">{props.type}</div>
+                <div className="placeType">{props.description.slice(0,50)}</div>
             </div>
-            <img className="placeImage" src={props.imageURL}></img>
+            <img className="placeImage" src={props.icon}></img>
         </div>
     );
 }
@@ -36,20 +40,24 @@ export const TourCard:React.FC<TourCardIE> = (props) =>{
 
     return(
         <div>
-            {showMap? <div>
-                <Block  className='tourcard-block'>
+            {/* <Sidebar
+                sidebar={
+                    <Block  className='tourcard-block'>
                     <MyMap></MyMap>
                     <Button className='btn-y' onClick={()=>setShowMap(!showMap)}>Закрыть</Button>
-
-                </Block>
-            </div>:null}
+                    </Block>
+                }
+                open={showMap}
+                styles={{ sidebar: { background: "white" } }}
+            ></Sidebar> */}
+                
             <Block className='tourcard-block'>
                 <div className="cardDescr">
                     <div className="cardTitle">
-                        <div className="titleText">{props.title}</div>
+                        <div className="titleText">{props.name}</div>
                         <div className="cardInfo">
                             <div>{props.days} дней,</div>
-                            <div>{props.placeCards.length} мест</div>
+                            <div>{props.points.length} мест</div>
                         </div>
                     </div>
                     <img  className="cardAvatar" src={props.imageURL}></img>
@@ -57,7 +65,7 @@ export const TourCard:React.FC<TourCardIE> = (props) =>{
                 </div>
                 <div className="placesWrapper">
                     {
-                        props.placeCards.map((value, index) => <PlaceCard {...value}></PlaceCard>)
+                        props.points.map((value, index) => <PlaceCard {...value}></PlaceCard>)
                     }
                 </div>
                 <Button className='' onClick={()=>setShowMap(!showMap)}>Посмотреть</Button>
