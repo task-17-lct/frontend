@@ -12,14 +12,19 @@ export const Card: react.FC<ICard> = (props) => {
    return <div className={'card__container ' + props.className}>{props.children}</div>
 }
 
-export const TinderCardContent: react.FC = (props) => {
+
+interface ITinderCard{
+    title: string;
+    description: string;
+}
+
+export const TinderCardContent: react.FC<ITinderCard> = (props) => {
     return <Card className='tinder-card__card'>
         <img src='/sample.jpg' width={200} height={200}></img>
         <div className="tinder__content">
-            <span><strong>Отель:</strong> Ромашка</span>
-            <span><strong>Звезд:</strong> 4</span>
+            <span><strong>Название:</strong> {props.title}</span>
 
-            <span><strong>Описание: </strong>Очень хороший отель с видом на море</span>
+            <span><strong>Описание: </strong>{props.description}</span>
         </div>
     </Card>
 }

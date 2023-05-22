@@ -4,8 +4,18 @@ import './style.css'
 interface IInput{
     placeholder: string;
     className: string;
+    onChange?: (content: string) => void;
 }
 
 export const Input: react.FC<IInput> = (props) => {
-    return <input type="text" className={'input__container ' +props.className} placeholder={props.placeholder}/>
+    var onChange = props.onChange;
+    if (!onChange) {
+        onChange = (e: string) => {}
+    }
+    return <input 
+        type="text" 
+        className={'input__container ' +props.className} 
+        placeholder={props.placeholder}
+        onChange={(e) => (onChange as any)(e.target.value)}
+    />
 }
