@@ -19,7 +19,7 @@ export const GenerateCard:React.FC = (props) =>{
                 </div>                
             </div>
             <img src='generateTour.png'></img>
-            <Button className='generate-y'>Посмотреть <img className="wand" src='magicWand.svg'></img></Button>
+            <Button className='generate-y'>Cгенерирвоать тур <img className="wand" src='magicWand.svg'></img></Button>
 
         </Block>
     );

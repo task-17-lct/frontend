@@ -1,5 +1,6 @@
 .generatecard-block{
     width: 400px;
+    height: 548px;
     display: flex;
     flex-direction: column;
     gap:30px;
