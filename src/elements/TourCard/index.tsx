@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from '../../elements/Button'
 import { Block } from '../../elements/Block'
 import './style.css'
-import { MyMap } from "../../сomponents/map";
+import { MyMap } from "../map";
 import Sidebar from "react-sidebar";
 
 export interface PlaceCardIE{
@@ -18,7 +18,9 @@ export interface TourCardIE{
     description:string,
     days:number, 
     points: PlaceCardIE[],
-    imageURL?: string
+    imageURL?: string;
+    id?: string
+    mapPoints: number[][]
 }
 
 export const PlaceCard: React.FC<PlaceCardIE> = (props) =>{
@@ -39,17 +41,20 @@ export const TourCard:React.FC<TourCardIE> = (props) =>{
 
 
     return(
-        <div>
-            {/* <Sidebar
+        <div id={props.id}>
+            <Sidebar
                 sidebar={
-                    <Block  className='tourcard-block'>
-                    <MyMap></MyMap>
-                    <Button className='btn-y' onClick={()=>setShowMap(!showMap)}>Закрыть</Button>
-                    </Block>
-                }
+                    <div className='sidebarContent'>
+                        <MyMap points={props.mapPoints}></MyMap>
+                        <Button className='btn-y' onClick={()=>setShowMap(!showMap)}>Закрыть</Button>
+                    </div> 
+                    }
                 open={showMap}
-                styles={{ sidebar: { background: "white" } }}
-            ></Sidebar> */}
+                rootClassName='mainCardContent'
+                contentClassName="mainCardContent"
+                sidebarClassName="tourCardSidebar"
+                styles={{ sidebar: { background: "white"}}}
+            >
                 
             <Block className='tourcard-block'>
                 <div className="cardDescr">
@@ -71,6 +76,7 @@ export const TourCard:React.FC<TourCardIE> = (props) =>{
                 <Button className='' onClick={()=>setShowMap(!showMap)}>Посмотреть</Button>
 
             </Block>
+            </Sidebar>
         </div>
         
     );

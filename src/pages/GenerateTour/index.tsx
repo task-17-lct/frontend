@@ -21,19 +21,26 @@ export const GenerateTour = () =>{
             backend.get('/route/build').then((data)=>setToursData(data.data))
         }
     })
+    
+    console.log(toursData)
+
+
 
 
 
      
     let tours = new Array()
 
-    toursData.forEach(tour => {
+    toursData.forEach((tour, index) => {
+        const points = [] as number[][]
+        tour.points.forEach((point, index)=>{
+            points.push([point.location[1], point.location[0]])
+        })
         tours.push(
-            <TourCard {...tour}></TourCard>
+            <TourCard {...tour} mapPoints={points} id={index.toString()}></TourCard>
         )
     })
 
-    console.log(toursData)
         
 
     return(

@@ -72,3 +72,25 @@
     color:rgba(29, 29, 29, 0.5);
     font-size: 12px;
 }
+
+.mainCardContent{
+    position: relative !important;
+}
+
+.tourCardSidebar{
+    position: fixed !important;
+    left: 0px;
+    width: 30%;
+    top:0px;
+    border-radius: 0px 20px 20px 0px;
+    padding: 50px; 
+}
+
+.sidebarContent{
+    display: flex;
+    flex-direction: column;
+    gap:50px;
+    align-items: center;
+    justify-content: space-between;
+}
+
