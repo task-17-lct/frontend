@@ -1,5 +1,6 @@
-import { AutoComplete, DatePicker, Input, Checkbox } from 'antd';
-import react, { useState } from 'react'
+import { AutoComplete, DatePicker, Input, Checkbox, Select } from 'antd';
+import react, { useEffect, useState } from 'react'
+import { backend } from '../../consts';
 import { Button } from '../../elements/Button';
 import { FavoriteCard, FavoriteCardIE } from '../../elements/FavoriteCard';
 import { GenerateCard } from '../../elements/GenerateCard';
@@ -9,6 +10,14 @@ import './style.css'
 
 export const Main: react.FC = () => {
    const { RangePicker } = DatePicker;
+   const [cities, setCities] = useState([])
+
+   useEffect(()=>{
+      if (cities.length == 0){
+          backend.get('/data/cities').then((response)=>setCities(response.data))
+      }
+  })
+
 
    const TourPropsCard = {
       name: 'Я покажу тебе Москву',
@@ -77,9 +86,25 @@ export const Main: react.FC = () => {
                      <div>Фильтры</div>
                   </div>
                   <img src='react.svg'></img>
-                  <AutoComplete> 
-                     <Input.Search style={{width:'25vw'}} className='searchBar' size="large" placeholder="Введите направление"/>
-                  </AutoComplete>
+                  <Select
+                     className='antdBorder'
+                     showSearch
+                     placeholder="Выберите направление"
+                     optionFilterProp="children"
+                     // onChange={onChange}
+                     // onSearch={onSearch}
+                     filterOption={(input, option) =>
+                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                     }
+                     options={cities.map((city:any)=>{
+                        return {
+                        value:city.oid,
+                        label: city.title
+                     }
+                     }
+                     )}
+                  />
+
                   <img src='react.svg'></img>
                   <RangePicker
                               onChange={(e)=>setDates(e as any)}

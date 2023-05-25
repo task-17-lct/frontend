@@ -113,6 +113,10 @@
     display: flex;
     flex-direction: column;
     gap:10px
+    
 }
 
 
+.ant-select-selector, .ant-picker{
+    border: 0px !important;
+}

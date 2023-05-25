@@ -1,0 +1,44 @@
+.choiceIconWrapper{
+    display: flex;
+    flex-direction: row;
+    gap:30px;
+    align-items: center;
+}
+
+.choiceBtn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    border: 2px solid #FAEFDB;
+    background: #FAEFDB;
+    padding: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.choiceBtn:hover{
+    opacity: 0.5;
+}
+.choiceBtnActive{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    background: #FAEFDB;
+    border: 2px solid #FFCF08;
+    padding: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.choiceBtnWrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:10px
+}

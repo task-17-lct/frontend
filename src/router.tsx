@@ -7,6 +7,7 @@ import { Login } from './pages/Login';
 import { Main } from './pages/Main';
 import { EventMatch } from './pages/EventMatch';
 import { GenerateTour } from './pages/GenerateTour';
+import { Prefernces } from './elements/Prefernces';
 
 
 const routes = [
@@ -33,6 +34,10 @@ const routes = [
     {
         path: '/generate',
         element: <GenerateTour></GenerateTour>
+    },
+    {
+        path: '/prefs',
+        element: <Prefernces></Prefernces>
     }
 
 ]
