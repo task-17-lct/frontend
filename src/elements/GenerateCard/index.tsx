@@ -15,11 +15,11 @@ export const GenerateCard:React.FC = (props) =>{
         <Block className='generatecard-block'>
             <div className="generateCardDescr">
                 <div className="generateCardTitle">
-                    <div className="generateTitleText">Сгенерируй свой фантастический Тур!</div>
+                    <div className="generateTitleText">Выбери свой фантастический Тур!</div>
                 </div>                
             </div>
             <img src='generateTour.png'></img>
-            <Button className='generate-y'>Cгенерирвоать тур <img className="wand" src='magicWand.svg'></img></Button>
+            <Button className='generate-y'>Выбрать <img className="wand" src='magicWand.svg'></img></Button>
 
         </Block>
     );

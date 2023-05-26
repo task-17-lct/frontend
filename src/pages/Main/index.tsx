@@ -1,5 +1,6 @@
 import { AutoComplete, DatePicker, Input, Checkbox, Select } from 'antd';
 import react, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { backend } from '../../consts';
 import { Button } from '../../elements/Button';
 import { FavoriteCard, FavoriteCardIE } from '../../elements/FavoriteCard';
@@ -7,10 +8,13 @@ import { GenerateCard } from '../../elements/GenerateCard';
 import { RusPassHeader } from '../../elements/Header';
 import { TourCard, TourCardIE } from '../../elements/TourCard';
 import './style.css'
+import dayjs from 'dayjs';
+import type { RangePickerProps } from 'antd/es/date-picker';
 
 export const Main: react.FC = () => {
    const { RangePicker } = DatePicker;
    const [cities, setCities] = useState([])
+   
 
    useEffect(()=>{
       if (cities.length == 0){
@@ -54,26 +58,27 @@ export const Main: react.FC = () => {
       location:'Казань'
    } as FavoriteCardIE
 
-   const [dates, setDates] = useState()
-
-   const options = [
-      {
-        label: 'Подсказка 1',
-        options: 'Подсказка 1',
-      },
-      {
-         label: 'Подсказка 2',
-         options: 'Подсказка 2',
-      },
-      {
-         label: 'Подсказка 3',
-         options: 'Подсказка 3',
-      },
-    ];
 
    const [toolsOpened, setToolsOpened] = useState(false)
-
    
+   const [city, setCity] = useState('')
+   const [dates, setDates] = useState([])
+   let searchParams = {}
+
+   if (dates.length == 2){
+      searchParams = {
+         date_from: new Date((dates as any)[0]).toISOString().split('T')[0],
+         date_to: new Date((dates as any)[1]).toISOString().split('T')[0],
+         city: city
+      }
+   }
+
+   const disabledDate: RangePickerProps['disabledDate'] = (current:any) => {
+      // Can not select days before today and today
+      return current && current < dayjs().endOf('day');
+    };
+
+   let navigate = useNavigate()
    return (
       <div className='mainWrapper'>
          <RusPassHeader></RusPassHeader>
@@ -91,8 +96,7 @@ export const Main: react.FC = () => {
                      showSearch
                      placeholder="Выберите направление"
                      optionFilterProp="children"
-                     // onChange={onChange}
-                     // onSearch={onSearch}
+                     onChange={(e)=>setCity(e)}
                      filterOption={(input, option) =>
                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                      }
@@ -107,10 +111,11 @@ export const Main: react.FC = () => {
 
                   <img src='react.svg'></img>
                   <RangePicker
-                              onChange={(e)=>setDates(e as any)}
+                     disabledDate={disabledDate}
+                     onChange={(e)=>setDates(e as any)}
                   ></RangePicker>
                   <img src='react.svg'></img>
-                  <Button className='btn-y'>Сгенерировать</Button>
+                  <Button className='btn-y' onClick={()=>navigate('search/' + JSON.stringify(searchParams))}>Сгенерировать</Button>
                </div>
                {
                   toolsOpened? <div className='searchOpened'>
@@ -208,7 +213,7 @@ export const Main: react.FC = () => {
             </div>
          </div>
          <div className='mainCard'>
-            <h2>Добавьте в избранное</h2>
+            <h2>Избранное</h2>
             <div className='fav-wrapper'>
                <FavoriteCard {...favoriteCardProps}></FavoriteCard>
                <FavoriteCard {...favoriteCardProps}></FavoriteCard>

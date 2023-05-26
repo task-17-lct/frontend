@@ -8,6 +8,7 @@ import { Main } from './pages/Main';
 import { EventMatch } from './pages/EventMatch';
 import { GenerateTour } from './pages/GenerateTour';
 import { Prefernces } from './elements/Prefernces';
+import { SearchPage } from './pages/SearchPage';
 
 
 const routes = [
@@ -26,6 +27,10 @@ const routes = [
     {
         path: '/',
         element: <Main></Main>
+    },
+    {
+        path: '/search/:prefs',
+        element: <SearchPage></SearchPage>
     },
     {
         path: '/event-match',

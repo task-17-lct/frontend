@@ -9,10 +9,7 @@
     padding: 50px;
     width: calc(100% - 200px);
 }
-.mainCard>h2{
-    display: inline-block;
-    width: 400px;
-}
+
 
 .cardWrapper{
     display: inline-flex;
