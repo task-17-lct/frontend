@@ -1,5 +1,5 @@
 # Как запустить проект (прочитайте)
-
+Ссылка на скринкаст: https://drive.google.com/file/d/1Fllpuu-m_Hvg5VfhedEvIVpuq1omAQVs/view?usp=sharing
 Ссылка на просмотр task-17-lct.github.io\
 Логин: admin\
 Пароль: 123
