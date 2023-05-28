@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from '../Button'
 import { Block } from '../Block'
 import './style.css'
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -9,7 +10,8 @@ import './style.css'
 
 
 export const GenerateCard:React.FC = (props) =>{
-    
+    let navigate = useNavigate()
+
 
     return(
         <Block className='generatecard-block'>
@@ -19,8 +21,7 @@ export const GenerateCard:React.FC = (props) =>{
                 </div>                
             </div>
             <img src='generateTour.png'></img>
-            <Button className='generate-y'>Выбрать <img className="wand" src='magicWand.svg'></img></Button>
-
+            <Button onClick={()=>navigate('/event-match')} className='generate-y'>Выбрать <img className="wand" src='magicWand.svg'></img></Button>
         </Block>
     );
 

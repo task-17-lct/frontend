@@ -27,8 +27,9 @@ export const Register: react.FC = () => {
             <Button className='' onClick={() => {
                 register(username, password).then((e) => {
                     signin(username, password).then((e) => {
+                        localStorage.setItem('firstAuth', 'true');
                         localStorage.setItem('token', e.access);
-                        navigate('/event-match')
+                        navigate('/')
                     });
                 });
             }}>Зарегистрироваться</Button>

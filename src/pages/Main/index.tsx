@@ -13,12 +13,21 @@ import type { RangePickerProps } from 'antd/es/date-picker';
 import { Search } from '../../elements/Search';
 import { AttractionCard } from '../../elements/AttractionCard';
 import { EventCard, EventCardIE } from '../../elements/EventCard';
+import { Prefernces } from '../../elements/Prefernces';
 
 export const Main: react.FC = () => {
    const [events, setEvents] = useState([])
    const [favorites, setFavorites] = useState([])
+   let navigate = useNavigate()
+
+   let token = localStorage.getItem('token')
+
+   let firstAuth = localStorage.getItem('firstAuth')
 
    useEffect(()=>{
+      if (null == localStorage.getItem('token')){
+         navigate('/login')
+      }
       if (favorites.length == 0){
          backend.get('user/favorite').then((e)=>setFavorites(e.data))
       }
@@ -39,6 +48,9 @@ export const Main: react.FC = () => {
   
    return (
       <div className='mainWrapper'>
+         {
+            firstAuth == 'true'? <Prefernces></Prefernces>:null
+         }
          <RusPassHeader></RusPassHeader>
          <div className='headMainWrapper'>
             <img  className='backgroundIMG' src='background.png'></img>

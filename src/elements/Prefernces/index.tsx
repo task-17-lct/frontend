@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Carousel, Tabs } from 'antd';
+import { Carousel, Spin, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Button } from "../Button";
 import './style.css'
@@ -9,6 +9,7 @@ import axios from "axios";
 import { backend } from "../../consts";
 import { HotelCard, HotelCardIE } from "../HotelCard";
 import { AttractionCard, AttractionCardIE } from "../AttractionCard";
+import { useNavigate } from "react-router-dom";
 export const Prefernces = () =>{
     const [activeTab, setActiveTab] = useState(1)
     const [cities, setCities] = useState([])
@@ -265,6 +266,7 @@ export const Prefernces = () =>{
                             <h2>Выберите понравившеися вам отели</h2>
                             <div className='hotelsCardWrapper'>
                                     {
+                                        hotels.length == 0? <Spin></Spin>:
                                         hotels.map((hotel:HotelCardIE)=><HotelCard key={hotel.title} {...hotel}></HotelCard>)
                                     }
                             </div>
@@ -296,7 +298,9 @@ export const Prefernces = () =>{
                         <div>
                             <h2>Выберите самое интересное</h2>
                             <div className='hotelsCardWrapper'>
+
                                     {
+                                        events.length == 0? <Spin></Spin>:
                                         events.map((event:AttractionCardIE)=>{
                                             return <AttractionCard key={event.oid} {...event}></AttractionCard>
                                         })
@@ -307,9 +311,15 @@ export const Prefernces = () =>{
           },
       ];
     
+    let navigate = useNavigate()
 
-
-
+    const onNextClick = () =>{
+        setActiveTab((activeTab+1)%5)
+        if (activeTab+1 == 5){
+            localStorage.setItem('firstAuth', 'false');
+            navigate('/')
+        }
+    }
     return(
         <div className="prefsbg">
             <div className="prefs">
@@ -318,7 +328,7 @@ export const Prefernces = () =>{
                     <div style={{color:'rgba(29, 29, 29, 0.5)'}}>Отметьте свои предпочтения, чтобы мы смогли предоставить лучшие рекомендации туров</div>
                 </div>
                 <Tabs activeKey={activeTab.toString()} items={items} onChange={(e)=>setActiveTab(Number(e))} />
-                <Button className="btn-y" onClick={()=> setActiveTab((activeTab+1)%5)}>Далее</Button>
+                <Button className="btn-y" onClick={()=> onNextClick()}>Далее</Button>
             </div>
         </div>
         

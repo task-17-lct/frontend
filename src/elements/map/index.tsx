@@ -63,7 +63,7 @@ export const MyMap: React.FC<MapIE> = (props) =>{
           'line-cap': 'round'
         },
         paint: {
-          'line-color': '#3887be',
+          'line-color': '#FFCF08',
           'line-width': 5,
           'line-opacity': 0.75
         }
