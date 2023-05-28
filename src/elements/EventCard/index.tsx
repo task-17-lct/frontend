@@ -46,8 +46,7 @@ export const EventCard:React.FC<EventCardIE> = (props) =>{
                 <img className="hotelImg" src='/icons/not_found.jpeg'></img>
                 <h5>{props.title}</h5>
                 <div className="hotelCardRow">
-                    <div>{props.description}</div>
-                    <div>{category[props.category as keyof typeof category]}</div>
+                    <div>{props.description.length > 50? props.description.slice(0,100)+'...': props.description}</div>
                 </div>
             </div>
         </div>

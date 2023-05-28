@@ -26,11 +26,11 @@ export const MyMap: React.FC<MapIE> = (props) =>{
     
     const [route, setRoute] = useState()
 
-    useEffect(()=>{
+    if (route == undefined){
         axios.get('https://api.mapbox.com/directions/v5/mapbox/walking/'+pathString+'?alternatives=true&continue_straight=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=pk.eyJ1IjoiZmlyZXNpZWh0IiwiYSI6ImNrdW9kemYzbTB4ZGkycHAxbXN2YnIzaGMifQ.G0fl-qVbecucfOvn8OtU4Q').then(
             (data:any) => setRoute(data.data.routes[0].geometry)
         )
-    })
+    }
 
    
 

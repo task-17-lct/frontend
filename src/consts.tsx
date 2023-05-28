@@ -7,10 +7,9 @@ import axios from "axios";
 //   });
 
 
-  export const backend = axios.create({
+export const backend = axios.create({
     baseURL: 'https://0e06-92-100-146-65.ngrok-free.app/api/',
     timeout: 100000,
-    headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3NjEwNTg3LCJpYXQiOjE2ODUwMTg1ODcsImp0aSI6IjZhY2E2NDJkYWM0NzQyYmZhNGRjM2UzNjdiZTlhMzZhIiwidXNlcl9pZCI6OH0.JsmCZTvNXuL3VCgntvaDDtnA7u9eBeR6WFfgaosXWZo'}
-  });
-
-  
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+  }
+)
