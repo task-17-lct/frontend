@@ -21,7 +21,6 @@ export const Prefernces = () =>{
             backend.get('/data/cities').then((response)=>setCities(response.data))
             backend.get('/data/regions').then((response)=>setRegions(response.data))
         }
-
     })
    
 
@@ -221,7 +220,7 @@ export const Prefernces = () =>{
                 },
             ],
             onChange: (e)=>backend.post('/onboarding/event/', {
-                stars: e.map((value)=>Number(value))
+                types: e
             }).then((response)=>setEvents(response.data.events))
 
         } as ChoiceIconIE

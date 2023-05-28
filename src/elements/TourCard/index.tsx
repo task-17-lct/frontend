@@ -20,7 +20,11 @@ export interface TourCardIE{
     points: PlaceCardIE[],
     imageURL?: string;
     id?: string
-    mapPoints: number[][]
+    mapPoints: {
+        description:string,
+        cords:number[],
+        title:string
+      }[]
 }
 
 export const PlaceCard: React.FC<PlaceCardIE> = (props) =>{

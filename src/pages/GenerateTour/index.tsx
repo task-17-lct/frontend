@@ -32,12 +32,17 @@ export const GenerateTour = () =>{
     let tours = new Array()
 
     toursData.forEach((tour, index) => {
-        const points = [] as number[][]
+        let points = new Array()
         tour.points.forEach((point, index)=>{
-            points.push([point.location[1], point.location[0]])
+            points.push({
+                cords:[point.location[1], point.location[0]],
+                title: point.title,
+                description: point.description
+            }
+            )
         })
         tours.push(
-            <TourCard {...tour} mapPoints={points} id={index.toString()}></TourCard>
+            <TourCard {...tour} mapPoints={points as any} id={index.toString()}></TourCard>
         )
     })
 

@@ -6,12 +6,17 @@ import { MyMap } from "../map";
 import Sidebar from "react-sidebar";
 import { PlaceCard } from "../TourCard";
 import { Collapse, Tabs, TabsProps } from "antd";
+import { backend } from "../../consts";
 
 export interface RouteCardIE{
+    rawProps:any,
+    city:string,
     options: {
         date:string,
         paths:({
             type:string
+            distance:number,
+            point_type:string,
             point:{
                 lat:number,
                 lon:number,
@@ -38,7 +43,11 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
     })
 
     let points = props.options[Number(selectedDay)].paths.map((path)=>{
-        return [path.point.lon, path.point.lat]
+        return {
+            description:path.point.description,
+            title: path.point.title,
+            cords:[path.point.lon, path.point.lat]
+        }
     })
 
     const items: TabsProps['items'] = props.options.map((day, index)=>{
@@ -78,9 +87,16 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
 
         }
     })
-
+    
+    const onLiked = () =>{
+        // backend.get('route/list').then((e)=>console.log(e.data))
+        backend.post('route/save', {
+            points: props.rawProps.path
+        })
+        setLiked(!liked)
+    }
     return(
-        <div>
+        <div key={props.city + props.options[0].paths[0].point.oid}>
             <Sidebar
                 sidebar={
                     <div className='sidebarContent'>
@@ -99,7 +115,7 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
             <Block className='tourcard-block'>
                 <div className="cardDescr">
                     <div className="cardTitle">
-                        <div className="titleText">ИМЯ ТУРА</div>
+                        <div className="titleText">{props.city}</div>
                         <div className="cardInfo">
                             <div>{props.options.length} дней,</div>
                             <div>{cntPlaces} мест</div>
@@ -113,7 +129,7 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
                         <div className="yOpenBtnTitle">От 5000 рублей</div>
                         <div className="yOpenBtnDescr">Просмотреть план тура</div>
                     </div>
-                    <div className="likeBtn" onClick={()=>setLiked(!liked)}>
+                    <div className="likeBtn" onClick={()=>onLiked()}>
                         <img src={liked? '/icons/likedHeart.svg':'/icons/heart.svg'}></img>
                     </div>
                 </div>

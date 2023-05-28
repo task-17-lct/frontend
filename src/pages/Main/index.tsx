@@ -1,4 +1,4 @@
-import { AutoComplete, DatePicker, Input, Checkbox, Select } from 'antd';
+import { AutoComplete, DatePicker, Input, Checkbox, Select, Radio, Space, Spin } from 'antd';
 import react, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { backend } from '../../consts';
@@ -10,47 +10,24 @@ import { TourCard, TourCardIE } from '../../elements/TourCard';
 import './style.css'
 import dayjs from 'dayjs';
 import type { RangePickerProps } from 'antd/es/date-picker';
+import { Search } from '../../elements/Search';
+import { AttractionCard } from '../../elements/AttractionCard';
+import { EventCard, EventCardIE } from '../../elements/EventCard';
 
 export const Main: react.FC = () => {
-   const { RangePicker } = DatePicker;
-   const [cities, setCities] = useState([])
-   
+   const [events, setEvents] = useState([])
+   const [favorites, setFavorites] = useState([])
 
    useEffect(()=>{
-      if (cities.length == 0){
-          backend.get('/data/cities').then((response)=>setCities(response.data))
+      if (favorites.length == 0){
+         backend.get('user/favorite').then((e)=>setFavorites(e.data))
       }
-  })
-
-
-   const TourPropsCard = {
-      name: 'Я покажу тебе Москву',
-      days: 8,
-      id:'23343',
-      mapPoints: [[-71.0703,42.3419],[-71.0688, 42.3393],[-71.0728, 42.3348]],
-      imageURL: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-      points: [
-         {
-            title:'Парк Горького',
-            description: 'Место',
-            icon:'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-            location:[1,2],
-
-         },
-         {
-            title:'Отель Москва',
-            description: 'Отель',
-            icon:'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-            location:[1,2]
-         },
-         {
-            title:'Ресторан Сказка',
-            description: 'Ресторан',
-            icon:'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
-            location:[1,2]
-         }
-      ]
-   } as TourCardIE
+      if (events.length == 0){
+         backend.get('recommendations/recommendations/').then((e)=>setEvents(e.data as any));
+      }
+   })
+   
+   
 
    const favoriteCardProps = {
       imageURL:'restourant.png',
@@ -59,168 +36,54 @@ export const Main: react.FC = () => {
    } as FavoriteCardIE
 
 
-   const [toolsOpened, setToolsOpened] = useState(false)
-   
-   const [city, setCity] = useState('')
-   const [dates, setDates] = useState([])
-   let searchParams = {}
-
-   if (dates.length == 2){
-      searchParams = {
-         date_from: new Date((dates as any)[0]).toISOString().split('T')[0],
-         date_to: new Date((dates as any)[1]).toISOString().split('T')[0],
-         city: city
-      }
-   }
-
-   const disabledDate: RangePickerProps['disabledDate'] = (current:any) => {
-      // Can not select days before today and today
-      return current && current < dayjs().endOf('day');
-    };
-
-   let navigate = useNavigate()
+  
    return (
       <div className='mainWrapper'>
          <RusPassHeader></RusPassHeader>
          <div className='headMainWrapper'>
             <img  className='backgroundIMG' src='background.png'></img>
-            <div style={{width:'75%'}}>
-               <div style={{borderRadius: toolsOpened? '20px 20px 0px 0px':'20px'}} className='toolsMainWrapper'>
-                  <div className='rowWrapper' onClick={()=>setToolsOpened(!toolsOpened)}>
-                     <img src='filter.svg'></img>
-                     <div>Фильтры</div>
-                  </div>
-                  <img src='react.svg'></img>
-                  <Select
-                     className='antdBorder'
-                     showSearch
-                     placeholder="Выберите направление"
-                     optionFilterProp="children"
-                     onChange={(e)=>setCity(e)}
-                     filterOption={(input, option) =>
-                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                     }
-                     options={cities.map((city:any)=>{
-                        return {
-                        value:city.oid,
-                        label: city.title
-                     }
-                     }
-                     )}
-                  />
-
-                  <img src='react.svg'></img>
-                  <RangePicker
-                     disabledDate={disabledDate}
-                     onChange={(e)=>setDates(e as any)}
-                  ></RangePicker>
-                  <img src='react.svg'></img>
-                  <Button className='btn-y' onClick={()=>navigate('search/' + JSON.stringify(searchParams))}>Сгенерировать</Button>
-               </div>
-               {
-                  toolsOpened? <div className='searchOpened'>
-                        <div className='questionWrapper'>
-                           <h2>Как добраться</h2>
-                           <div className='checkboxWrapper'>
-                              <Checkbox>Самолет</Checkbox>
-                              <Checkbox>ЖД</Checkbox>
-                              <Checkbox>Автобус</Checkbox>
-                              <Checkbox>Смешанный</Checkbox>
-                           </div>
-                        </div>
-
-                        <div className='questionWrapper'>
-                           <h2>Где остановимся</h2>
-                           <div className='checkboxWrapper'>
-                              <Checkbox>Отель</Checkbox>
-                              <Checkbox>Хостел</Checkbox>
-                              <Checkbox>Апартаменты</Checkbox>
-                           </div>
-                        </div>
-
-                        <div className='questionWrapper'>
-                           <h2>Как перемещаться на месте</h2>
-                           <div className='checkboxWrapper'>
-                              <Checkbox>Машина</Checkbox>
-                              <Checkbox>Общественный транспорт</Checkbox>
-                              <Checkbox>Пешком</Checkbox>
-                           </div>
-                        </div>
-
-                        <div className='questionWrapper'>
-                           <h2>Что посмотреть</h2>
-                           <div className='checkboxWrapper'>
-                              <Checkbox>Музеи и выставки</Checkbox>
-                              <Checkbox>Мероприятия и места</Checkbox>
-                              <Checkbox>Обзорные экскурсии</Checkbox>
-                              <Checkbox>Культурное наследие</Checkbox>
-                              <Checkbox>Парки и прогулки</Checkbox>
-                           </div>
-                        </div>
-
-                        <div className='questionWrapper'>
-                           <h2>Где питаться</h2>
-                           <div className='checkboxWrapper'>
-                              <Checkbox>Рестораны</Checkbox>
-                              <Checkbox>Кафе</Checkbox>
-                              <Checkbox>Бары</Checkbox>
-                           </div>
-                        </div>
-
-                        <div className='questionWrapper'>
-                           <h2>Дополнительно</h2>
-                           <div className='checkboxWrapper'>
-                              <Checkbox>С детьми</Checkbox>
-                              <Checkbox>С животными</Checkbox>
-                           </div>
-                        </div>
-
-                        <div className='questionWrapper'>
-                           <h2>Рейтинг</h2>
-                           <div className='checkboxWrapper'>
-                              <Checkbox>5*</Checkbox>
-                              <Checkbox>4*</Checkbox>
-                              <Checkbox>3*</Checkbox>
-                              <Checkbox>2*</Checkbox>
-                              <Checkbox>1*</Checkbox>
-                           </div>
-                        </div>
-
-                        <div className='questionWrapper'>
-                           <h2>Рейтинг</h2>
-                           <div className='checkboxWrapper'>
-                              <Checkbox>5*</Checkbox>
-                              <Checkbox>4*</Checkbox>
-                              <Checkbox>3*</Checkbox>
-                              <Checkbox>2*</Checkbox>
-                              <Checkbox>1*</Checkbox>
-                           </div>
-                        </div>
-                  </div>:null
-               }
-            </div>
-            
+            <Search onSearch={()=>null}></Search>
          </div>
          <div className='mainCard'>
             <h2>Рекомендации</h2>
+            
             <div className='cardWrapper'>
                <GenerateCard></GenerateCard>
-               <TourCard {...TourPropsCard}></TourCard>
-               <TourCard {...TourPropsCard}></TourCard>
-               <TourCard {...TourPropsCard}></TourCard>
-               <TourCard {...TourPropsCard}></TourCard>
-               <TourCard {...TourPropsCard}></TourCard>
+               {
+                  events.length == 0? <Spin/>
+                  :
+                  events.map((category:any)=>{
+                     category = category.events.map((event:any)=>{
+                        return <EventCard category={category.category} {...event}></EventCard>
+                     })
+                     return category
+                  })
+               
+               }
+
             </div>
          </div>
          <div className='mainCard'>
             <h2>Избранное</h2>
             <div className='fav-wrapper'>
-               <FavoriteCard {...favoriteCardProps}></FavoriteCard>
-               <FavoriteCard {...favoriteCardProps}></FavoriteCard>
-               <FavoriteCard {...favoriteCardProps}></FavoriteCard>
-               <FavoriteCard {...favoriteCardProps}></FavoriteCard>
-               <FavoriteCard {...favoriteCardProps}></FavoriteCard>
-               <FavoriteCard {...favoriteCardProps}></FavoriteCard>
+               {
+                  favorites.length == 0? <Spin/>
+                  :
+                  favorites.map((favorite:any, index)=>{
+                     if (index < 10){
+                     return <EventCard category='attraction'
+                     description={favorite.description}
+                     lat={1}
+                     lon={2}
+                     oid={favorite.oid}
+                     title={favorite.title} ></EventCard>
+                  }
+                  else{
+                     return null
+                  }
+                  })
+               
+               }
             </div>
             <div>
                <Button className=''>Посмотреть все</Button>
