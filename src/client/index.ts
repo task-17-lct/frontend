@@ -58,3 +58,46 @@ export const swipe = async (itemId: string, type: string) => {
     }
 
 }
+
+export const dailySelectionGenerate = async () => {
+    var data = await axios.get(
+        origin + 'api/recommendations/get_daily_selection/',
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+    );
+    return data.data;
+}
+
+export const dailySelectionBuild = async (buildData: any) => {
+    var data = await axios.post(
+        origin + 'api/recommendations/generate_daily_selection/',
+        {nodes: buildData},
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+    );
+    return data.data;
+}
+
+
+export const saveTinderPath = async (tinderData: any) => {
+    await axios.post(
+        origin + 'api/route/save', {
+            "points": [{
+                date: '2000-01-01',
+                paths: tinderData
+            },]
+        },
+        
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+    )
+}

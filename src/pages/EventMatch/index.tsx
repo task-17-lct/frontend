@@ -1,11 +1,12 @@
-import react, { useRef } from 'react'
+import react, { useRef, useState } from 'react'
 import TinderCard from 'react-tinder-card'
 import './style.css'
 import { Block } from '../../elements/Block'
 import { Card, TinderCardContent } from '../../elements/Card'
 import { Button } from '../../elements/Button'
-import { startTinder, swipe, } from '../../client'
+import { dailySelectionBuild, dailySelectionGenerate, saveTinderPath, startTinder, swipe, } from '../../client'
 import {useNavigate} from 'react-router-dom';
+import { MyMap } from '../../elements/map'
 
 interface IEventData{
     title: string;
@@ -18,76 +19,93 @@ export const EventMatch: react.FC = () => {
     const ref = useRef(null);
     const navigate = useNavigate();
     const started = useRef(false);
-    const swiping = useRef(false);
-    const [cardData, setCardData] = react.useState({title: "", description: "", id: ''} as IEventData);
-    const data  = react.useRef({title: "", description: "", id: ''} as IEventData)
-
+    const [dailyData, setDailyData] = useState([]);
+    const [resData, setResData] = useState<any[]>([]);
+    const queried = useRef(false);
+    const [answerData, setAnswerData] = useState([]);
 
     if (!started.current) {
         started.current = true;
-        startTinder().then((e) => {
-            
-            data.current = {
-                title: e.title,
-                description: e.description.split(' ').slice(0, 10).join(' '),
-                id: e.oid
-            };
-            setCardData({
-                title: e.title,
-                description: e.description.split(' ').slice(0, 10).join(' '),
-                id: e.oid
-            });
+        dailySelectionGenerate().then((e) => {
+            console.log(e)
+            setDailyData(e.events);
         })
     }
 
-
     return <div className='centered tin'>
     <Block className='tinder-block'>
-        <TinderCard ref={ref} onSwipe={(type) => {
-            console.log("swipe");
-            if (swiping.current) return;
-            swiping.current = true;
-            swipe(data.current.id, type).then((e) => {
-                if (!e) {
-                    navigate('/');
-                    return;
-                }
-                data.current = {
-                    title: e.event.title,
-                    description: e.event.description.split(' ').slice(0, 10).join(' '),
-                    id: e.event.oid
-                };
-                setCardData(
-                    {
-                        title: e.event.title,
-                        description: e.event.description.split(' ').slice(0, 10).join(' '),
-                        id: e.event.oid
-                    }
-                );
-                setTimeout(() => {
-                    (ref.current as any).restoreCard();
-                    swiping.current = false;
-                }, 2000);
+        {
+            dailyData.map((e) => {
+                return <TinderCard 
+                    ref={ref} 
+                    className='card'
+                    onSwipe={(type) => {
+                        console.log(dailyData.indexOf(e))
+                        if (dailyData.indexOf(e) == 0) {
+                            if (!resData.length) return;
+                            if (!queried.current) {
+                                dailySelectionBuild(resData).then((e) => {
+                                    setAnswerData(e.path);
+                                });
+                                queried.current = true;
+                            }
+                        }
+                        
+                        if (type == 'right') {
+                            setResData(resData.concat([
+                                {
+                                    'action': 'right',
+                                    'oid': (e as any).oid
+                                } as any
+                            ]))
+                        }
+                        
+                    }}
+                >
+        
+                    <Card className=''>
+                        <TinderCardContent
+                            title={dailyData.length ? (e as any).title : ""}
+                            description={dailyData.length ? (e as any).description.slice(0, 70) : ""}
+                        ></TinderCardContent>
+                    </Card>
+                </TinderCard>
             })
-            
-        }}>
-            <Card className=''>
-                <TinderCardContent
-                    title={data.current.title}
-                    description={data.current.description}
-                ></TinderCardContent>
-            </Card>
-        </TinderCard>
-    </Block>
-
-    <Block className='tin-dir'>
-        <Button className='' onClick={() => {
-            (ref.current as any).swipe('left')
-        }}>Не нравится</Button>
-        <Button className='main-btn'>На главную</Button>
-        <Button className='' onClick={() => {
-            (ref.current as any).swipe('right')
-        }}>Нравится</Button>
+        }
+        <div className='cont-span'>
+        {
+            dailyData.length && !answerData.length ?
+            (!queried.current ? 
+            <div className='span-cont'><span className='span-er'>Вы не выбрали ни одного события, Мы не можем сгенерировать вам маршрут. Возвращяйтесь к нам завтра. <a 
+            href="" onClick={() => {
+                navigate('/');
+            }}
+            >Вернуться на главную</a></span></div> : <span>Подождите немного, мы генерируем для вас ежедневный маршрут</span>) : answerData.length ? <MyMap points={
+                answerData.filter((e: any) => e.type == 'point').map((e: any) => {return {
+                    cords: [e.point.lat, e.point.lon],
+                    title: e.point.title,
+                    description: ""
+                }})
+                
+            }></MyMap> : <></>
+        }
+        {
+            answerData.length ? <div className='btns'>
+            <Button onClick={() => {
+                saveTinderPath(answerData);
+                navigate('/');
+            }} className=''>
+                Сохранить
+            </Button>
+            <Button onClick={() => {
+                navigate('/');
+            }} className=''>
+                На главную
+            </Button>
+            </div> : <></>
+        }
+        </div>
+        
     </Block>
    </div>
 }
