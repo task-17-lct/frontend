@@ -1,7 +1,7 @@
 import { AutoComplete, DatePicker, Input, Checkbox, Select, Radio, Space, Spin } from 'antd';
 import react, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { backend } from '../../consts';
+import { backend, updateBackend } from '../../consts';
 import { Button } from '../../elements/Button';
 import { FavoriteCard, FavoriteCardIE } from '../../elements/FavoriteCard';
 import { GenerateCard } from '../../elements/GenerateCard';
@@ -21,10 +21,10 @@ export const Main: react.FC = () => {
    let navigate = useNavigate()
 
    let token = localStorage.getItem('token')
-
    let firstAuth = localStorage.getItem('firstAuth')
-
+   console.log(token)
    useEffect(()=>{
+      updateBackend()
       if (null == localStorage.getItem('token')){
          navigate('/login')
       }

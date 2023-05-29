@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { backend } from "../../consts";
 import { RouteCard, RouteCardIE } from "../../elements/RouteCard";
@@ -15,14 +15,26 @@ export const SearchPage:React.FC = () =>{
 
     const [data, setData] = useState([])
     const [events, setEvents] = useState([])
+    const queried = useRef(false);
     useEffect(()=>{
-        if (cities.length == 0){
-            backend.get('/data/cities').then((response)=>setCities(response.data))
-            backend.post('/route/build',JSON.parse(prefs as string)).then((r)=>setData(r.data as any))
-            backend.post('/recommendations/build_events/',JSON.parse(prefs as string)).then((r)=>setEvents(r.data as any))
-        }
-    })
 
+        const dataLoad = async (prefs: string) => {
+            const cities = await backend.get('/data/cities')
+            const routes = await backend.post('/route/build',JSON.parse(prefs as string))
+            const events = await backend.post('/recommendations/build_events/',JSON.parse(prefs as string))
+            return {
+                cities, routes, events
+            }
+        }
+        if (!queried.current) {
+            queried.current = true;
+            dataLoad(prefs as string).then((data) => {
+                setCities(data.cities.data as any);
+                setData(data.routes.data as any);
+                setEvents(data.events.data as any);
+            })
+        }
+    }, [prefs])
     console.log(events)
 
     let newData;

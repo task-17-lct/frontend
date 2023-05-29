@@ -1,5 +1,5 @@
 import {
-    createBrowserRouter
+    createBrowserRouter, createHashRouter
 } from 'react-router-dom'
 import App from './App'
 import { Register } from './pages/Register';
@@ -7,8 +7,8 @@ import { Login } from './pages/Login';
 import { Main } from './pages/Main';
 import { EventMatch } from './pages/EventMatch';
 import { GenerateTour } from './pages/GenerateTour';
-import { Prefernces } from './elements/Prefernces';
 import { SearchPage } from './pages/SearchPage';
+import { Prefernces } from './elements/Prefernces';
 
 
 const routes = [
@@ -47,4 +47,4 @@ const routes = [
 
 ]
 
-export const router = createBrowserRouter(routes);
+export const router = createHashRouter(routes);

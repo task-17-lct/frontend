@@ -25,6 +25,7 @@ export const Login: react.FC = () => {
             <Input placeholder='Пароль' className='reg-input' onChange={setPassword}/>
             <Button className='' onClick={() => {
                     signin(username, password).then((e) => {
+                        console.log(e)
                         localStorage.setItem('token', e.access);
                         localStorage.setItem('firstAuth', 'true');
 
@@ -36,9 +37,9 @@ export const Login: react.FC = () => {
                 <span>или</span>
                 <div className="sep-item"></div>
             </div>
-            <YandexLogin clientID={clientID} onSuccess={() => {}}>
-                <button className="btn-y">Yandex login</button>
-            </YandexLogin>
+            <Button className='login-btn-y' onClick={()=>navigate('/register')}>Зарегистрироваться</Button>
+
+
         </Block>
     </div>
 }
