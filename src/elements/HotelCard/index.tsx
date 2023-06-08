@@ -58,11 +58,12 @@ export const HotelCard:React.FC<HotelCardIE> = (props) =>{
                             </div>
                         </div>
                         <div>
-                            {props.rooms.map((room)=><div>
+                            {props.rooms != null? props.rooms.map((room)=><div>
                                 <h5>{room.name}</h5>
                                 <div>{room.description}</div>
                             </div>
-                            )}
+                            ) : null
+                        }
                         </div>
                         <Button className="" onClick={()=>setOpened(!opened)}>Закрыть</Button>
                     </div>

@@ -20,12 +20,23 @@
     width: 400px;
 }
 
-.btn-y{
-    width: 440px!important;
+.login-btn-y{
     background-color: #FFCF08;
     border-radius: 10px;
     padding: 15px 50px;
     outline: none;
     border: none;
     cursor: pointer;
+}
+
+@media screen and (max-device-width: 600px) {
+    .reg-input{
+        width: 280px !important;
+    }
+}
+
+@media screen and (max-device-width: 600px) {
+    .reg-input{
+        width: 200px !important;
+    }
 }

@@ -38,9 +38,8 @@ export const Register: react.FC = () => {
                 <span>или</span>
                 <div className="sep-item"></div>
             </div>
-            <YandexLogin clientID={clientID} onSuccess={() => {}}>
-                <button className="btn-y">Yandex login</button>
-            </YandexLogin>
+            <Button className='login-btn-y' onClick={()=>navigate('/login')}>Войти</Button>
+
         </Block>
     </div>
 }

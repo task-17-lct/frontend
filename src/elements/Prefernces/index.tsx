@@ -12,17 +12,9 @@ import { AttractionCard, AttractionCardIE } from "../AttractionCard";
 import { useNavigate } from "react-router-dom";
 export const Prefernces = () =>{
     const [activeTab, setActiveTab] = useState(1)
-    const [cities, setCities] = useState([])
-    const [regions, setRegions] = useState([])
     const [hotels, setHotels] = useState([])
     const [events, setEvents] = useState([])
 
-    useEffect(()=>{
-        if (cities.length == 0){
-            backend.get('/data/cities').then((response)=>setCities(response.data))
-            backend.get('/data/regions').then((response)=>setRegions(response.data))
-        }
-    })
    
 
     const transportOptions = {
@@ -255,7 +247,7 @@ export const Prefernces = () =>{
           label: `Проживание`,
           children: <div>
                         <div>
-                            <h2>Где вы предпочитаете остановится</h2>
+                            <h2>Где вы предпочитаете остановиться</h2>
                             <ChoiceIcon {...hotelOptions}></ChoiceIcon>
                         </div>
                         <div>
@@ -263,7 +255,7 @@ export const Prefernces = () =>{
                             <ChoiceIcon {...ratingOptions}></ChoiceIcon>
                         </div>
                         <div>
-                            <h2>Выберите понравившеися вам отели</h2>
+                            <h2>Выберите понравившиеся вам отели</h2>
                             <div className='hotelsCardWrapper'>
                                     {
                                         hotels.length == 0? <Spin></Spin>:

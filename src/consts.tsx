@@ -7,9 +7,18 @@ import axios from "axios";
 //   });
 
 
-export const backend = axios.create({
+export let backend = axios.create({
     baseURL: 'https://0e06-92-100-146-65.ngrok-free.app/api/',
     timeout: 100000,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
   }
 )
+
+export const updateBackend = () =>{
+    backend = axios.create({
+      baseURL: 'https://0e06-92-100-146-65.ngrok-free.app/api/',
+      timeout: 100000,
+      headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+    }
+  )
+}

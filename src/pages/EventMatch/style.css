@@ -7,3 +7,53 @@
 .main-btn{
     background-color: #FFCF08;
 }
+
+.tinder-block{
+    height: 600px;
+}
+
+.card{
+    position: absolute;
+}
+.span-er{
+    width: 250px;
+    text-align: center;
+}
+a{
+    color: black;
+}
+a:visited{
+    color: black;
+}
+
+.btns{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.cont-span{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 500px;
+}
+
+.span-cont{
+    display: flex;
+    justify-content: center;
+    
+}
+
+@media screen and (max-device-width: 800px) {
+    .tinder-block{
+        width: auto;
+        padding: 10px;
+    }
+    .cont-span{
+        width: auto;
+        padding: 50px;
+        align-items:   center ;
+    }
+}

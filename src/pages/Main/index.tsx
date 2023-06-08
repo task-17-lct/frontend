@@ -1,7 +1,7 @@
 import { AutoComplete, DatePicker, Input, Checkbox, Select, Radio, Space, Spin } from 'antd';
-import react, { useEffect, useState } from 'react'
+import react, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { backend } from '../../consts';
+import { backend, updateBackend } from '../../consts';
 import { Button } from '../../elements/Button';
 import { FavoriteCard, FavoriteCardIE } from '../../elements/FavoriteCard';
 import { GenerateCard } from '../../elements/GenerateCard';
@@ -21,31 +21,42 @@ export const Main: react.FC = () => {
    let navigate = useNavigate()
 
    let token = localStorage.getItem('token')
-
    let firstAuth = localStorage.getItem('firstAuth')
+   console.log(token)
+
+   const queried = useRef(false);
 
    useEffect(()=>{
+      updateBackend()
+
+      const dataLoad = async () =>{
+         const favorites = await backend.get('user/favorite')
+         const events = await backend.get('recommendations/recommendations/')
+         return {
+            favorites, events
+         }
+      }
+
+      if (!queried.current && localStorage.getItem('token') != null && localStorage.getItem('firstAuth') != 'true') {
+         queried.current = true;
+         dataLoad().then((data) => {
+             setFavorites(data.favorites.data as any);
+             setEvents(data.events.data as any);
+         })
+      }
+
       if (null == localStorage.getItem('token')){
          navigate('/login')
       }
-      if (favorites.length == 0){
-         backend.get('user/favorite').then((e)=>setFavorites(e.data))
-      }
-      if (events.length == 0){
-         backend.get('recommendations/recommendations/').then((e)=>setEvents(e.data as any));
-      }
+
+      // if (favorites.length == 0){
+      //    backend.get('user/favorite').then((e)=>setFavorites(e.data))
+      // }
+      // if (events.length == 0){
+      //    backend.get('recommendations/recommendations/').then((e)=>setEvents(e.data as any));
+      // }
    })
-   
-   
-
-   const favoriteCardProps = {
-      imageURL:'restourant.png',
-      title:'Кафе Сказка',
-      location:'Казань'
-   } as FavoriteCardIE
-
-
-  
+     
    return (
       <div className='mainWrapper'>
          {
@@ -53,7 +64,10 @@ export const Main: react.FC = () => {
          }
          <RusPassHeader></RusPassHeader>
          <div className='headMainWrapper'>
-            <img  className='backgroundIMG' src='background.png'></img>
+            <div className='backgroundMainIMG'>
+               <div className='imgHeader'>Сгенерируйте ваш идеальный тур</div>
+               <div className='imgDescr'>Туры, достопримечательности, отели  - все в одном cервисе</div>
+            </div>
             <Search onSearch={()=>null}></Search>
          </div>
          <div className='mainCard'>
@@ -102,7 +116,7 @@ export const Main: react.FC = () => {
             </div>
          </div>
 
-         <a href='/'>Документация</a>
+         <a href='https://1drv.ms/w/s!AuaFmGWFNV5Np0OhMmVtxPXlG2Ob?e=f7NDCp'>Документация</a>
 
          <div className='mainIconWrapper'>
             <img className='mainIcon' src='icons/yt.svg'></img>
