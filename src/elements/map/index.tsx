@@ -14,6 +14,12 @@ export interface MapIE{
     description:string
   }[]
 
+  remapedPoints?:{
+    cords:number[],
+    title:string,
+    description:string
+  }[]
+
 }
 
 export const MyMap: React.FC<MapIE> = (props) =>{
@@ -26,7 +32,6 @@ export const MyMap: React.FC<MapIE> = (props) =>{
     
     const [route, setRoute] = useState()
 
-    console.log(route)
 
 
     useEffect(()=>{
@@ -91,7 +96,6 @@ export const MyMap: React.FC<MapIE> = (props) =>{
         }
       };
       
-    console.log(props)
     return (
     <div style={{width:'100%'}}>
         
@@ -118,6 +122,13 @@ export const MyMap: React.FC<MapIE> = (props) =>{
             <img src="/pin.png" />
           </Marker>
           })
+        }
+        {
+          props.remapedPoints != undefined?  props.remapedPoints.map((point, index)=>{
+            return  <Marker longitude={point.cords[0]} latitude={point.cords[1]} anchor="bottom" >
+            <img src="/redpin.png" />
+          </Marker>
+          }) : null
         }
       </Map>
     </div>

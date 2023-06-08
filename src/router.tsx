@@ -10,6 +10,7 @@ import { GenerateTour } from './pages/GenerateTour';
 import { SearchPage } from './pages/SearchPage';
 import { Prefernces } from './elements/Prefernces';
 import { Favorites } from './pages/Favorites';
+import { Weather } from './pages/Weather';
 
 
 const routes = [
@@ -48,6 +49,10 @@ const routes = [
     {
         path:'/favorites',
         element: <Favorites></Favorites>
+    },
+    {
+        path: '/route/:routeChangeId/change',
+        element: <Weather></Weather>
     }
 
 ]

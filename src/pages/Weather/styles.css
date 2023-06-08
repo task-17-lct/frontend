@@ -1,0 +1,21 @@
+.changeBtnWrapper{
+    display: flex;
+    flex-direction: row;
+    gap:25px;
+    align-items:center ;
+    justify-content: center;
+}
+
+.changeYBtn{
+    width: 400px;
+    background: #FFCF08;
+}
+.changeBtn{
+    width: 400px;
+}
+
+@media screen and (max-device-width: 500px) {
+    .changeBtnWrapper{
+        flex-wrap: wrap;
+    }
+}
