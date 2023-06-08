@@ -11,6 +11,7 @@ import { SearchPage } from './pages/SearchPage';
 import { Prefernces } from './elements/Prefernces';
 import { Favorites } from './pages/Favorites';
 import { Weather } from './pages/Weather';
+import { Buyed } from './pages/Buyed';
 
 
 const routes = [
@@ -53,6 +54,10 @@ const routes = [
     {
         path: '/route/:routeChangeId/change',
         element: <Weather></Weather>
+    },
+    {
+        path: '/buyed',
+        element: <Buyed></Buyed>
     }
 
 ]

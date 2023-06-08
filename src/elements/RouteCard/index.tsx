@@ -7,6 +7,7 @@ import Sidebar from "react-sidebar";
 import { PlaceCard } from "../TourCard";
 import { Collapse, Tabs, TabsProps } from "antd";
 import { backend } from "../../consts";
+import { useNavigate } from "react-router-dom";
 
 export interface RouteCardIE{
     rawProps:any,
@@ -36,7 +37,7 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
     const [showMap, setShowMap] = useState(false)
     const [selectedDay, setSelectedDay] = useState('0')
     const [liked, setLiked] = useState(false)
-
+    let navigate = useNavigate()
     let cntPlaces = 0
     props.options.forEach((route)=>{
         cntPlaces += route.paths.length
@@ -92,8 +93,16 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
         // backend.get('route/list').then((e)=>console.log(e.data))
         backend.post('route/save', {
             points: props.rawProps.path
-        })
+        }).then((e)=>console.log(e.data))
         setLiked(!liked)
+    }
+
+    const onBuy = () =>{
+        backend.post('route/save', {
+            points: props.rawProps.path
+        }).then((e)=>backend.get('buy/' + e.data.id + '/add_to_buy/'))
+        
+        navigate('/buyed')
     }
     return(
         <div key={props.city + props.options[0].paths[0].point.oid}>
@@ -102,6 +111,7 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
                     <div className='sidebarContent'>
                         <MyMap points={points}></MyMap>
                         <Tabs defaultActiveKey="0" items={colapseItems} onChange={(e:string)=>setSelectedDay(e)} />
+                        <Button className='' onClick={()=>onBuy()}>КУПИТЬ</Button>
                         <Button className='btn-y' onClick={()=>setShowMap(!showMap)}>Закрыть</Button>
                     </div> 
                     }
