@@ -14,6 +14,12 @@ export interface MapIE{
     description:string
   }[]
 
+  remapedPoints?:{
+    cords:number[],
+    title:string,
+    description:string
+  }[]
+
 }
 
 export const MyMap: React.FC<MapIE> = (props) =>{
@@ -26,13 +32,12 @@ export const MyMap: React.FC<MapIE> = (props) =>{
     
     const [route, setRoute] = useState()
 
-    console.log(route)
 
 
     useEffect(()=>{
       setTimeout(()=> axios.get('https://api.mapbox.com/directions/v5/mapbox/walking/'+pathString+'?alternatives=true&continue_straight=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=pk.eyJ1IjoiZmlyZXNpZWh0IiwiYSI6ImNrdW9kemYzbTB4ZGkycHAxbXN2YnIzaGMifQ.G0fl-qVbecucfOvn8OtU4Q').then(
         (data:any) => setRoute(data.data.routes[0].geometry)
-      ), 1000)
+      ).catch((err)=>console.log('ERRRRRRRR')), 1000)
      
     })
     
@@ -91,7 +96,6 @@ export const MyMap: React.FC<MapIE> = (props) =>{
         }
       };
       
-    console.log(props)
     return (
     <div style={{width:'100%'}}>
         
@@ -118,6 +122,13 @@ export const MyMap: React.FC<MapIE> = (props) =>{
             <img src="/pin.png" />
           </Marker>
           })
+        }
+        {
+          props.remapedPoints != undefined?  props.remapedPoints.map((point, index)=>{
+            return  <Marker longitude={point.cords[0]} latitude={point.cords[1]} anchor="bottom" >
+            <img src="/redpin.png" />
+          </Marker>
+          }) : null
         }
       </Map>
     </div>
