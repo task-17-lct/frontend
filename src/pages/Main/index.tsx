@@ -112,7 +112,7 @@ export const Main: react.FC = () => {
                }
             </div>
             <div>
-               <Button className=''>Посмотреть все</Button>
+               <Button onClick={()=>navigate('/favorites')} className=''>Посмотреть все</Button>
             </div>
          </div>
 

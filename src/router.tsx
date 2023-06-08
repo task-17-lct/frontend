@@ -9,6 +9,7 @@ import { EventMatch } from './pages/EventMatch';
 import { GenerateTour } from './pages/GenerateTour';
 import { SearchPage } from './pages/SearchPage';
 import { Prefernces } from './elements/Prefernces';
+import { Favorites } from './pages/Favorites';
 
 
 const routes = [
@@ -43,6 +44,10 @@ const routes = [
     {
         path: '/prefs',
         element: <Prefernces></Prefernces>
+    },
+    {
+        path:'/favorites',
+        element: <Favorites></Favorites>
     }
 
 ]
