@@ -7,6 +7,7 @@ import { Button } from '../../elements/Button'
 import { dailySelectionBuild, dailySelectionGenerate, saveTinderPath, startTinder, swipe, } from '../../client'
 import {useNavigate} from 'react-router-dom';
 import { MyMap } from '../../elements/map'
+import { RusPassHeader } from '../../elements/Header'
 
 interface IEventData{
     title: string;
@@ -33,6 +34,7 @@ export const EventMatch: react.FC = () => {
     }
 
     return <div className='centered tin'>
+        <RusPassHeader></RusPassHeader>
     <Block className='tinder-block'>
         {
             dailyData.map((e) => {

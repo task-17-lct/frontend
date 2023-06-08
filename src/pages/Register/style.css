@@ -28,3 +28,15 @@
     border: none;
     cursor: pointer;
 }
+
+@media screen and (max-device-width: 600px) {
+    .reg-input{
+        width: 280px !important;
+    }
+}
+
+@media screen and (max-device-width: 600px) {
+    .reg-input{
+        width: 200px !important;
+    }
+}

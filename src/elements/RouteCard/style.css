@@ -158,3 +158,28 @@
 .likeBtn:hover{
     opacity: 0.5;
 }
+
+@media screen and (max-device-width: 600px) {
+    .tourcard-block{
+        width: 300px;
+        gap:15px;
+        padding: 15px;
+    }
+    .titleText{
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .cardInfo{
+        font-size: 14px;
+    }
+    .tourCardSidebar{
+        width: calc(100% - 150px);
+    }
+}
+
+@media screen and (max-device-width: 400px) {
+    .tourcard-block{
+        width: 280px;
+    }
+}

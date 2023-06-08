@@ -1,6 +1,6 @@
 .mainCard{
     background-color: #FFFBF3;
-    width: сalc(100%-100px);
+    width: calc(100%-100px);
     margin: 0px 50px;
     display: flex;
     flex-direction: column;
@@ -9,9 +9,9 @@
     padding: 50px;
     width: calc(100% - 200px);
 }
+
 .mainCard>h2{
     display: inline-block;
-    width: 400px;
 }
 
 .cardWrapper{
@@ -24,9 +24,10 @@
 
 .fav-wrapper{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 25px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .grey{
@@ -80,8 +81,18 @@
 
 }
 
-.backgroundIMG{
-    width: calc(100% - 100px);
+.backgroundMainIMG{
+    width: calc(100% - 260px);
+    height: 25vh;
+    background-image: url('../../../public/background.png');
+    background-size: cover;
+    border-radius: 48px;
+    display: flex;
+    padding: 80px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap:20px
 }
 
 .rowWrapper{
@@ -120,4 +131,52 @@
 
 .ant-select-selector, .ant-picker{
     border: 0px !important;
+}
+
+.imgHeader{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 44px;
+    line-height: 46px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.imgDescr{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    display: flex;
+    align-items: flex-end;
+    text-align: center;
+
+
+    color: #FFFFFF;
+
+}
+
+@media screen and (max-device-width: 700px) {
+    .imgHeader{
+        font-size: 24px;
+        line-height: 28px;
+    }
+    .imgDescr{
+        font-size: 18px;
+        line-height: 22px;
+    }
+    .mainCard{
+        padding: 25px !important;
+        margin: 0px 25px !important;
+        border-radius: 20px !important;
+    }
+}
+
+@media screen and (max-device-width: 500px) {
+    .backgroundMainIMG{
+        width: calc(100% - 90px) !important;
+        padding: 20px !important;
+        padding-bottom: 60px !important;
+    }
 }

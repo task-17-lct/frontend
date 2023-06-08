@@ -45,3 +45,15 @@ a:visited{
     justify-content: center;
     
 }
+
+@media screen and (max-device-width: 800px) {
+    .tinder-block{
+        width: auto;
+        padding: 10px;
+    }
+    .cont-span{
+        width: auto;
+        padding: 50px;
+        align-items:   center ;
+    }
+}

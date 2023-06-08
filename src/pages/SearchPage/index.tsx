@@ -11,25 +11,23 @@ import { EventCard } from "../../elements/EventCard";
 
 export const SearchPage:React.FC = () =>{
     let { prefs } = useParams();
-    const [cities, setCities] = useState([])
 
     const [data, setData] = useState([])
     const [events, setEvents] = useState([])
+
     const queried = useRef(false);
     useEffect(()=>{
 
         const dataLoad = async (prefs: string) => {
-            const cities = await backend.get('/data/cities')
             const routes = await backend.post('/route/build',JSON.parse(prefs as string))
             const events = await backend.post('/recommendations/build_events/',JSON.parse(prefs as string))
             return {
-                cities, routes, events
+              routes, events
             }
         }
         if (!queried.current) {
             queried.current = true;
             dataLoad(prefs as string).then((data) => {
-                setCities(data.cities.data as any);
                 setData(data.routes.data as any);
                 setEvents(data.events.data as any);
             })
@@ -74,21 +72,12 @@ export const SearchPage:React.FC = () =>{
     const onSearch = () =>{
         setData([])
     }
-    const contentStyle: React.CSSProperties = {
-        height: '160px',
-        color: '#fff',
-        lineHeight: '160px',
-        textAlign: 'center',
-        background: '#364d79',
-      };
+
  
     return(
         <div className="mainWrapper">
             <RusPassHeader></RusPassHeader>
            
-               
-               
-    
             <h1>Посмотрите, что мы нашли по вашему запросу</h1>
             <Search onSearch={()=>onSearch()}></Search>
             {
@@ -124,7 +113,7 @@ export const SearchPage:React.FC = () =>{
                 
             }
 
-                    <a href='/'>Документация</a>
+                    <a href='https://1drv.ms/w/s!AuaFmGWFNV5Np0OhMmVtxPXlG2Ob?e=f7NDCp'>Документация</a>
 
                     <div className='mainIconWrapper'>
                         <img className='mainIcon' src='/icons/yt.svg'></img>

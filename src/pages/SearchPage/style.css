@@ -1,6 +1,5 @@
 .mainCard{
     background-color: #FFFBF3;
-    width: сalc(100%-100px);
     margin: 0px 50px;
     display: flex;
     flex-direction: column;
@@ -21,7 +20,7 @@
 
 .fav-wrapper{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 25px;
     flex-wrap: wrap;
 }
@@ -53,6 +52,7 @@
     justify-content: center;
     align-items: center;
     padding-bottom: 100px;
+    width: 100%;
     
 }
 
@@ -117,4 +117,43 @@
 
 .ant-select-selector, .ant-picker{
     border: 0px !important;
+}
+
+
+@media screen and (max-device-width: 1000px) {
+    .toolsMainWrapper{
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 15px;
+    }
+    .rectIMG{
+        display: none;
+    }
+    .mainCard{
+        padding: 25px !important;
+        margin: 0px 25px !important;
+        border-radius: 20px !important;
+    }
+   
+}
+@media screen and (max-device-width: 700px) {
+    h1{
+        font-size: 24px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-device-width: 500px) {
+    .mainCard{
+        margin: 0px 15px !important;
+        padding: 10px;
+        width: calc(100% - 100px);
+    }
+    h1{
+        width: 100%;
+        font-size: 16px;
+        text-align: center;
+        margin-top: -50px;
+    }
 }

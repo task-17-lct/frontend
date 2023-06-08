@@ -1,14 +1,13 @@
-import { AutoComplete, DatePicker, Input, Checkbox, Select, Radio, Space } from 'antd';
-import react, { useEffect, useState } from 'react'
+import { DatePicker, Checkbox, Select, Radio, Space } from 'antd';
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { backend } from '../../consts';
+import { backend, updateBackend } from '../../consts';
 import { Button } from '../../elements/Button';
 
 import './style.css'
 import dayjs from 'dayjs';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import type { Dayjs } from 'dayjs';
-import { propTypes } from 'react-tinder-card';
 
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 
@@ -19,7 +18,9 @@ export const Search:React.FC<{onSearch?:()=>void}> = (props) =>{
     
 
     useEffect(()=>{
-        if (cities.length == 0){
+        if (cities.length == 0 && localStorage.getItem('token') != null){
+            updateBackend()
+            console.log(localStorage.getItem('token'))
             backend.get('/data/cities').then((response)=>setCities(response.data))
         }
     })
@@ -79,12 +80,10 @@ export const Search:React.FC<{onSearch?:()=>void}> = (props) =>{
     }
 
 
-    let searchParams = {}
  
-    if (datesValue.length == 2){
-       searchParams = {
-          date_from: new Date((datesValue as any)[0]).toISOString().split('T')[0],
-          date_to: new Date((datesValue as any)[1]).toISOString().split('T')[0],
+       let searchParams = {
+          date_from: datesValue.length == 2? new Date((datesValue as any)[0]).toISOString().split('T')[0]:null,
+          date_to: datesValue.length == 2? new Date((datesValue as any)[1]).toISOString().split('T')[0]:null,
           city: city,
           stars:stars,
           what_to_see:whatToSee,
@@ -94,7 +93,7 @@ export const Search:React.FC<{onSearch?:()=>void}> = (props) =>{
           with_animals: withAnimals,
           movement: transport
        }
-    }
+    
 
     const disabledDate: RangePickerProps['disabledDate'] = (current:any) => {
       if (!dates) {
@@ -106,6 +105,8 @@ export const Search:React.FC<{onSearch?:()=>void}> = (props) =>{
 
        return current && current < dayjs().endOf('day') || !!tooEarly || !!tooLate;;
      };
+
+
      const onOpenChange = (open: boolean) => {
       if (open) {
         setDates([null, null]);
@@ -129,7 +130,7 @@ export const Search:React.FC<{onSearch?:()=>void}> = (props) =>{
                      <img src='/filter.svg'></img>
                      <div>Фильтры</div>
                   </div>
-                  <img src='/react.svg'></img>
+                  <img className='rectIMG' src='/react.svg'></img>
                   <Select
                      className='antdBorder'
                      showSearch
@@ -148,7 +149,7 @@ export const Search:React.FC<{onSearch?:()=>void}> = (props) =>{
                      )}
                   />
 
-                  <img src='/react.svg'></img>
+                  <img className='rectIMG' src='/react.svg'></img>
                   <RangePicker
                      disabledDate={disabledDate}
                      onCalendarChange={(val) => {
@@ -158,7 +159,7 @@ export const Search:React.FC<{onSearch?:()=>void}> = (props) =>{
                      changeOnBlur
                      onChange={(e)=>setDatesValue(e as any)}
                   ></RangePicker>
-                  <img src='/react.svg'></img>
+                  <img className='rectIMG' src='/react.svg'></img>
                   <Button className='btn-y' onClick={()=>onNavigate()}>Сгенерировать</Button>
                </div>
                {

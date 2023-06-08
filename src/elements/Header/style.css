@@ -25,3 +25,23 @@
 .headerIcon:hover{
     transform: scale(1.05);
 }
+
+@media screen and (max-device-width: 1000px) {
+    .headerWrapper{
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-device-width: 600px) {
+    .delete600{
+        display: none;
+    }
+}
+
+@media screen and (max-device-width: 400px) {
+    .padding{
+        padding-left: 15px;
+        padding-right: 15px;
+        width: calc(100% - 30px);
+    }
+}

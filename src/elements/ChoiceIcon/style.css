@@ -42,3 +42,16 @@
     justify-content: center;
     gap:10px
 }
+@media screen and (max-device-width: 500px) {
+    .choiceIconWrapper{
+        gap:15px
+    }
+    .choiceBtn{
+        width: 20px;
+        padding: 10px;
+    }
+    .choiceBtnActive{
+        width: 20px;
+        padding: 10px;
+    }
+}

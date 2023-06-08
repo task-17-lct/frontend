@@ -20,7 +20,7 @@ interface ITinderCard{
 
 export const TinderCardContent: react.FC<ITinderCard> = (props) => {
     return <Card className='tinder-card__card'>
-        <img src='/sample.jpg' width={200} height={200}></img>
+        <img src='/generateTour.png' width={300} height={300}></img>
         <div className="tinder__content">
             <span><strong>Название:</strong> {props.title}</span>
 
