@@ -12,6 +12,7 @@ import { Prefernces } from './elements/Prefernces';
 import { Favorites } from './pages/Favorites';
 import { Weather } from './pages/Weather';
 import { Buyed } from './pages/Buyed';
+import { NonAuth } from './pages/NonAuth';
 
 
 const routes = [
@@ -58,6 +59,10 @@ const routes = [
     {
         path: '/buyed',
         element: <Buyed></Buyed>
+    },
+    {
+        path: '/non-auth/:prefs',
+        element: <NonAuth></NonAuth>
     }
 
 ]

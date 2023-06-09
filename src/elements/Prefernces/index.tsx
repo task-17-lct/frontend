@@ -187,27 +187,27 @@ export const Prefernces = () =>{
     const attractionOptions = {
             options:[
                 {
-                    name: 'Park',
+                    name: 'Парки',
                     icon: 'icons/park.png',
                     key: 'park'
                 },
                 {
-                    name: 'Monument',
+                    name: 'Памятники',
                     icon: 'icons/monument.png',
                     key: 'monument'
                 },
                 {
-                    name: 'Museum',
+                    name: 'Музеи',
                     icon: 'icons/museum.png',
                     key: 'museum'
                 },
                 {
-                    name: 'Unesco',
+                    name: 'Культурное наследие',
                     icon: 'icons/unesco.png',
                     key: 'unesco'
                 },
                 {
-                    name: 'Exhibition',
+                    name: 'Выставки ',
                     icon: 'icons/exhibition.png',
                     key: 'exhibition'
                 },
@@ -232,11 +232,11 @@ export const Prefernces = () =>{
           children: 
           <div>
             <div>
-                <h2>Как вы предпочитаете добираться</h2>
+                <h2>Как добраться до города</h2>
                 <ChoiceIcon {...transportOptions}></ChoiceIcon>
             </div>
             <div>
-                <h2>Как вы предпочитаете передвигаться на месте</h2>
+                <h2>Как передвигаться по городу</h2>
                 <ChoiceIcon {...transportCityOptions}></ChoiceIcon>
             </div>
           </div>
@@ -247,7 +247,7 @@ export const Prefernces = () =>{
           label: `Проживание`,
           children: <div>
                         <div>
-                            <h2>Где вы предпочитаете остановиться</h2>
+                            <h2>Где остановиться</h2>
                             <ChoiceIcon {...hotelOptions}></ChoiceIcon>
                         </div>
                         <div>
@@ -270,7 +270,7 @@ export const Prefernces = () =>{
           label: `Питание`,
           children: <div>
                         <div>
-                            <h2>Где вы предпочитаете есть</h2>
+                            <h2>Где поесть</h2>
                             <ChoiceIcon {...eatOptions}></ChoiceIcon>
                         </div>
                         <div>
@@ -284,11 +284,11 @@ export const Prefernces = () =>{
             label: `Развлечения`,
             children: <div>
                         <div>
-                            <h2>Что вы хотите увидеть</h2>
+                            <h2>Что посмотреть</h2>
                             <ChoiceIcon {...attractionOptions}></ChoiceIcon>
                         </div>
                         <div>
-                            <h2>Выберите самое интересное</h2>
+                            <h2>Выберите понравившиеся вам места</h2>
                             <div className='hotelsCardWrapper'>
 
                                     {

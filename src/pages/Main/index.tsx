@@ -1,4 +1,4 @@
-import { AutoComplete, DatePicker, Input, Checkbox, Select, Radio, Space, Spin } from 'antd';
+import { AutoComplete, DatePicker, Input, Checkbox, Select, Radio, Space, Spin, TabsProps, Tabs } from 'antd';
 import react, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { backend, updateBackend } from '../../consts';
@@ -22,7 +22,6 @@ export const Main: react.FC = () => {
 
    let token = localStorage.getItem('token')
    let firstAuth = localStorage.getItem('firstAuth')
-   console.log(token)
 
    const queried = useRef(false);
 
@@ -46,17 +45,33 @@ export const Main: react.FC = () => {
       }
 
       if (null == localStorage.getItem('token')){
-         navigate('/login')
+         navigate('/non-auth/{}')
       }
 
-      // if (favorites.length == 0){
-      //    backend.get('user/favorite').then((e)=>setFavorites(e.data))
-      // }
-      // if (events.length == 0){
-      //    backend.get('recommendations/recommendations/').then((e)=>setEvents(e.data as any));
-      // }
-   })
      
+   })
+   console.log(events)
+
+   const items: TabsProps['items'] = []
+   events.forEach((category:any, index)=>{
+      items.push({
+         key:index.toString(),
+         label: category.category,
+         children: <div className='cardWrapper'>
+                     <GenerateCard></GenerateCard>
+                     {
+                        category.events.map((event:any)=>{
+                              return <EventCard category={category.category} {...event}></EventCard>
+                           })
+
+                     
+                     }
+
+                  </div>
+      })
+   })
+
+
    return (
       <div className='mainWrapper'>
          {
@@ -73,7 +88,7 @@ export const Main: react.FC = () => {
          <div className='mainCard'>
             <h2>Рекомендации</h2>
             
-            <div className='cardWrapper'>
+            {/* <div className='cardWrapper'>
                <GenerateCard></GenerateCard>
                {
                   events.length == 0? <Spin/>
@@ -87,7 +102,10 @@ export const Main: react.FC = () => {
                
                }
 
-            </div>
+            </div> */}
+            {
+               items.length == 0? <Spin></Spin>: <Tabs defaultActiveKey="0" items={items}></Tabs>
+            }
          </div>
          <div className='mainCard'>
             <h2>Избранное</h2>

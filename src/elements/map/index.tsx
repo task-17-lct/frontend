@@ -5,6 +5,7 @@ import { Checkbox } from '@yandex/ui/Checkbox/desktop/bundle'
 import path from "path";
 import { configureRootTheme } from '@yandex/ui/Theme'
 import { theme } from '@yandex/ui/Theme/presets/default'
+import { backend } from "../../consts";
 configureRootTheme({ theme })
 
 export interface MapIE{
@@ -125,8 +126,8 @@ export const MyMap: React.FC<MapIE> = (props) =>{
         }
         {
           props.remapedPoints != undefined?  props.remapedPoints.map((point, index)=>{
-            return  <Marker longitude={point.cords[0]} latitude={point.cords[1]} anchor="bottom" >
-            <img src="/redpin.png" />
+            return  <Marker onClick={(e)=>console.log(e, 'click' + point.title)} longitude={point.cords[0]} latitude={point.cords[1]} anchor="bottom" >
+            <img onClick={()=>'IMG IMG IMG'} src="/redpin.png" />
           </Marker>
           }) : null
         }
