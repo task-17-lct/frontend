@@ -10,7 +10,8 @@ export interface EventCardIE{
     lat: number,
     lon: number,
     oid: string,
-    title: string
+    title: string,
+    True?:boolean
 }
 
 enum category{
@@ -31,7 +32,7 @@ enum category{
 export const EventCard:React.FC<EventCardIE> = (props) =>{
     let location = useLocation()
 
-    const [liked, setLiked] = useState(location.pathname == '/favorites'? true:false)
+    const [liked, setLiked] = useState(location.pathname == '/favorites' || props.True? true:false)
 
     const onLiked = ()=>{
         if (localStorage.getItem('token') != null){

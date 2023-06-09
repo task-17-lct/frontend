@@ -120,7 +120,9 @@ export const Main: react.FC = () => {
                      lat={1}
                      lon={2}
                      oid={favorite.oid}
-                     title={favorite.title} ></EventCard>
+                     title={favorite.title} 
+                     True={true}
+                     ></EventCard>
                   }
                   else{
                      return null
