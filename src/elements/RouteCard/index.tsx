@@ -130,8 +130,23 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
     const onBuy = () =>{
         
         if (localStorage.getItem('token') != null){
+
+            let paths = props.rawProps.path
+
+            if (changePoint != undefined){
+                console.log(paths[changePoint.day])
+    
+                for (let i = 0; i < paths[changePoint.day].paths.length; i++) { 
+                    console.log(paths[changePoint.day].paths[i])
+                    if (paths[changePoint.day].paths[i].point.oid == changePoint.point_to_change) { 
+                        paths[changePoint.day].paths.splice(i, 1); 
+                      i--; 
+                    }
+                }
+                paths[changePoint.day].paths.push(changePoint.new_point)
+            }
             backend.post('route/save', {
-                points: props.rawProps.path
+                points: paths
             }).then((e)=>backend.get('buy/' + e.data.id + '/add_to_buy/'))
             navigate('/buyed')
         }
