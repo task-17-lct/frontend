@@ -8,6 +8,8 @@ import { PlaceCard } from "../TourCard";
 import { Collapse, Tabs, TabsProps } from "antd";
 import { backend } from "../../consts";
 import { useNavigate } from "react-router-dom";
+import { EventCard } from "../EventCard";
+import { PanelRoute } from "../PanelRoute";
 
 export interface RouteCardIE{
     rawProps:any,
@@ -37,11 +39,15 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
     const [showMap, setShowMap] = useState(false)
     const [selectedDay, setSelectedDay] = useState('0')
     const [liked, setLiked] = useState(false)
+    
     let navigate = useNavigate()
     let cntPlaces = 0
+    const [changePoint, setChangePoint] = useState<any>()
+    console.log(changePoint)
     props.options.forEach((route)=>{
         cntPlaces += route.paths.length
     })
+
 
     let points = props.options[Number(selectedDay)].paths.map((path)=>{
         return {
@@ -67,7 +73,6 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
             </div>
         }
     })
-
     const colapseItems: TabsProps['items'] = props.options.map((day, index)=>{
 
         return {
@@ -77,11 +82,22 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
                         bordered={false}
                     >
                 {
-                day.paths.map((value, index2) => 
-                        <Panel header={value.point.title} key={'collapse'+index.toString()+index2.toString()}>
-                            <img style={{width:'200px'}} src='/icons/not_found.jpeg'></img> 
-                            <p>{value.point.description}</p>
-                        </Panel>
+                day.paths.map((value, index2) =>{
+
+                    return <Panel header={value.point.title} key={'collapse'+index.toString()+index2.toString()}>
+                            <PanelRoute onChange={
+                                (oid)=>backend.get('/onboarding/'+oid+'/get_json_event')
+                                    .then((e)=>setChangePoint(
+                                        {
+                                            point_to_change:value.point.oid,
+                                            new_point: e.data,
+                                            day:index
+                                        } as any
+                                ))} 
+                                index={index} index2={index2} value={value}></PanelRoute>
+                        </Panel> 
+                }
+                       
                 )
                 }
             </Collapse>
@@ -91,18 +107,49 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
     
     const onLiked = () =>{
         // backend.get('route/list').then((e)=>console.log(e.data))
+        let paths = props.rawProps.path
+
+        if (changePoint != undefined){
+            console.log(paths[changePoint.day])
+
+            for (let i = 0; i < paths[changePoint.day].paths.length; i++) { 
+                console.log(paths[changePoint.day].paths[i])
+                if (paths[changePoint.day].paths[i].point.oid == changePoint.point_to_change) { 
+                    paths[changePoint.day].paths.splice(i, 1); 
+                  i--; 
+                }
+            }
+            paths[changePoint.day].paths.push(changePoint.new_point)
+        }
         backend.post('route/save', {
-            points: props.rawProps.path
+            points:paths
         }).then((e)=>console.log(e.data))
         setLiked(!liked)
     }
 
     const onBuy = () =>{
-        backend.post('route/save', {
-            points: props.rawProps.path
-        }).then((e)=>backend.get('buy/' + e.data.id + '/add_to_buy/'))
         
-        navigate('/buyed')
+        if (localStorage.getItem('token') != null){
+
+            let paths = props.rawProps.path
+
+            if (changePoint != undefined){
+                console.log(paths[changePoint.day])
+    
+                for (let i = 0; i < paths[changePoint.day].paths.length; i++) { 
+                    console.log(paths[changePoint.day].paths[i])
+                    if (paths[changePoint.day].paths[i].point.oid == changePoint.point_to_change) { 
+                        paths[changePoint.day].paths.splice(i, 1); 
+                      i--; 
+                    }
+                }
+                paths[changePoint.day].paths.push(changePoint.new_point)
+            }
+            backend.post('route/save', {
+                points: paths
+            }).then((e)=>backend.get('buy/' + e.data.id + '/add_to_buy/'))
+            navigate('/buyed')
+        }
     }
     return(
         <div key={props.city + props.options[0].paths[0].point.oid}>
@@ -110,9 +157,9 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
                 sidebar={
                     <div className='sidebarContent'>
                         <MyMap points={points}></MyMap>
-                        <Tabs defaultActiveKey="0" items={colapseItems} onChange={(e:string)=>setSelectedDay(e)} />
+                        <Tabs className="TabsRouteCard" defaultActiveKey="0" items={colapseItems} onChange={(e:string)=>setSelectedDay(e)} />
                         <Button className='' onClick={()=>onBuy()}>КУПИТЬ</Button>
-                        <Button className='btn-y' onClick={()=>setShowMap(!showMap)}>Закрыть</Button>
+                        <Button className='btn-y route-btn' onClick={()=>setShowMap(!showMap)}>Закрыть</Button>
                     </div> 
                     }
                 open={showMap}

@@ -1,14 +1,11 @@
 import axios from "axios";
 
-// export const backend = axios.create({
-//     baseURL: 'https://dev2.akarpov.ru/api/',
-//     timeout: 10000,
-//     headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3Mjk0NTExLCJpYXQiOjE2ODQ3MDI1MTEsImp0aSI6ImUwNGNjZGViMzA0NzQxYTlhYzJhODRhNzc1YWFkZTIxIiwidXNlcl9pZCI6N30.M-F08v6Wit5Bbm668m84JThyDX5yZhzsh3_GFh3nzXM'}
-//   });
 
+// export const BASE_URL = 'https://0e06-92-100-146-65.ngrok-free.app/api/'
+export const BASE_URL = 'https://dev2.akarpov.ru/api/'
 
 export let backend = axios.create({
-    baseURL: 'https://0e06-92-100-146-65.ngrok-free.app/api/',
+    baseURL: BASE_URL,
     timeout: 100000,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
   }
@@ -16,9 +13,13 @@ export let backend = axios.create({
 
 export const updateBackend = () =>{
     backend = axios.create({
-      baseURL: 'https://0e06-92-100-146-65.ngrok-free.app/api/',
+      baseURL: BASE_URL,
       timeout: 100000,
       headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
     }
   )
 }
+
+
+
+export const nonAuthToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4OTM2NDQ5LCJpYXQiOjE2ODYzNDQ0NDksImp0aSI6IjY0MzgyNzg3NmMzZTRhN2Q5ODAzYjJjMTM0MzY1MTg3IiwidXNlcl9pZCI6OH0._4AkdCc5XkfROe_9taVtFGV4Rx2HOM1HnV0Byc7NY_o'

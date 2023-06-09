@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { backend } from "../../consts";
 import { Button } from "../Button";
 import './style.css'
@@ -9,7 +10,8 @@ export interface EventCardIE{
     lat: number,
     lon: number,
     oid: string,
-    title: string
+    title: string,
+    True?:boolean
 }
 
 enum category{
@@ -28,12 +30,17 @@ enum category{
 
 
 export const EventCard:React.FC<EventCardIE> = (props) =>{
-    const [liked, setLiked] = useState(false)
+    let location = useLocation()
+
+    const [liked, setLiked] = useState(location.pathname == '/favorites' || props.True? true:false)
 
     const onLiked = ()=>{
-        backend.get('/onboarding/' + props.oid + '/add_to_favorites/')
-        setLiked(!liked)
+        if (localStorage.getItem('token') != null){
+            backend.get('/onboarding/' + props.oid + '/add_to_favorites/')
+            setLiked(!liked)
+        }
     }
+    console.log(location) 
 
     return(
         <div key={props.oid}>
