@@ -43,7 +43,21 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
     let navigate = useNavigate()
     let cntPlaces = 0
     const [changePoint, setChangePoint] = useState<any>()
-    console.log(changePoint)
+
+    if (changePoint != undefined){
+        for (let i = 0; i < props.options[changePoint.day].paths.length; i++) { 
+            console.log(props.options[changePoint.day].paths[i])
+            if (props.options[changePoint.day].paths[i].point.oid == changePoint.point_to_change) { 
+                props.options[changePoint.day].paths[i] = changePoint.new_point; 
+                // i--; 
+            }
+        }
+        // if (cnt > 0){
+        //     props.options[changePoint.day].paths.push(changePoint.new_point)
+        // }
+    }
+
+
     props.options.forEach((route)=>{
         cntPlaces += route.paths.length
     })
@@ -109,18 +123,18 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
         // backend.get('route/list').then((e)=>console.log(e.data))
         let paths = props.rawProps.path
 
-        if (changePoint != undefined){
-            console.log(paths[changePoint.day])
+        // if (changePoint != undefined){
+        //     console.log(paths[changePoint.day])
 
-            for (let i = 0; i < paths[changePoint.day].paths.length; i++) { 
-                console.log(paths[changePoint.day].paths[i])
-                if (paths[changePoint.day].paths[i].point.oid == changePoint.point_to_change) { 
-                    paths[changePoint.day].paths.splice(i, 1); 
-                  i--; 
-                }
-            }
-            paths[changePoint.day].paths.push(changePoint.new_point)
-        }
+        //     for (let i = 0; i < paths[changePoint.day].paths.length; i++) { 
+        //         console.log(paths[changePoint.day].paths[i])
+        //         if (paths[changePoint.day].paths[i].point.oid == changePoint.point_to_change) { 
+        //             paths[changePoint.day].paths.splice(i, 1); 
+        //           i--; 
+        //         }
+        //     }
+        //     paths[changePoint.day].paths.push(changePoint.new_point)
+        // }
         backend.post('route/save', {
             points:paths
         }).then((e)=>console.log(e.data))
@@ -133,18 +147,18 @@ export const RouteCard:React.FC<RouteCardIE> = (props) =>{
 
             let paths = props.rawProps.path
 
-            if (changePoint != undefined){
-                console.log(paths[changePoint.day])
+            // if (changePoint != undefined){
+            //     console.log(paths[changePoint.day])
     
-                for (let i = 0; i < paths[changePoint.day].paths.length; i++) { 
-                    console.log(paths[changePoint.day].paths[i])
-                    if (paths[changePoint.day].paths[i].point.oid == changePoint.point_to_change) { 
-                        paths[changePoint.day].paths.splice(i, 1); 
-                      i--; 
-                    }
-                }
-                paths[changePoint.day].paths.push(changePoint.new_point)
-            }
+            //     for (let i = 0; i < paths[changePoint.day].paths.length; i++) { 
+            //         console.log(paths[changePoint.day].paths[i])
+            //         if (paths[changePoint.day].paths[i].point.oid == changePoint.point_to_change) { 
+            //             paths[changePoint.day].paths.splice(i, 1); 
+            //           i--; 
+            //         }
+            //     }
+            //     paths[changePoint.day].paths.push(changePoint.new_point)
+            // }
             backend.post('route/save', {
                 points: paths
             }).then((e)=>backend.get('buy/' + e.data.id + '/add_to_buy/'))

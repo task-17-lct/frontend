@@ -5,6 +5,10 @@ import { Button } from "../Button";
 
 export const PanelRoute:React.FC<{value:any, index:number, index2: number, onChange:(oid:string)=>void}> = (props) =>{
     const [nearest, setNearest] = useState([])
+    const onChange = (oid:string) =>{
+        setNearest([])
+        props.onChange(oid)
+    }
     return <div>
                     <img style={{width:'200px'}} src='/icons/not_found.jpeg'></img> 
                     <p>{props.value.point.description}</p>
@@ -18,7 +22,7 @@ export const PanelRoute:React.FC<{value:any, index:number, index2: number, onCha
                                                 <div className="hotelCardRow">
                                                     <div>{value.description.length > 50? value.description.slice(0,70)+'...': value.description}</div>
                                                 </div>
-                                                <Button className="btn-y" onClick={() => props.onChange(value.oid)}>Выбрать</Button>
+                                                <Button className="btn-y" onClick={() => onChange(value.oid)}>Выбрать</Button>
                                             </div>
                                         </div>
                             })
